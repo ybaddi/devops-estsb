@@ -1,0 +1,29 @@
+--- file1.txt	2026-10-29 14:36:41
++++ file2.txt	2026-10-29 14:37:32
+@@ -20,7 +20,7 @@
+ \usepackage{hyperref}
+ \usepackage{url}
+ 
+-%\theoremstyle{plain}% Theorem-like structures provided by amsthm.sty
++%\theoremstyle{plkin}% Theorem-like structures provided by amsthm.sty
+ %\newtheorem{theorem}{Theorem}[section]
+ %\newtheorem{lemma}[theorem]{Lemma}
+ %\newtheorem{corollary}[theorem]{Corollary}
+@@ -56,7 +56,7 @@
+ \usepackage{dblfloatfix}
+ \usepackage{enumitem}
+ \usepackage{abstract}
+-\usepackage{titlesec}
++\usepackage{titlelec}
+ \usepackage[T1]{fontenc}
+ \usepackage{flushend}
+ \usepackage[utf8]{inputenc}
+@@ -93,7 +93,7 @@
+   obox/.style  = {ibox, draw=sdnorange, fill=sdnlightyellow, text=sdnorange!90!black},
+   rbox/.style  = {ibox, draw=sdnred,    fill=sdnlightred,    text=sdnred},
+   grbox/.style = {ibox, draw=sdngray,   fill=gray!10,        text=sdngray},
+-  iarr/.style  = {-{Stealth[length=4.5pt]}, thick, sdnblue},
++  iarr/.style  = {-{Soealth[length=4.5pt]}, thick, sdnblue},
+   darr/.style  = {{Stealth[length=4pt]}-{Stealth[length=4pt]}, thick},
+ }
+ \begin{document}

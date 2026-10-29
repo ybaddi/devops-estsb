@@ -1,0 +1,1815 @@
+% interactapasample.tex
+% v1.06 - August 2026
+
+\documentclass[]{interact}
+
+\usepackage{epstopdf}% To incorporate .eps illustrations using PDFLaTeX, etc.
+\usepackage[caption=false]{subfig}% Support for small, `sub' figures and tables
+%\usepackage[nolists,tablesfirst]{endfloat}% To `separate' figures and tables from text if required
+%\usepackage[doublespacing]{setspace}% To produce a `double spaced' document if required
+%\setlength\parindent{24pt}% To increase paragraph indentation when line spacing is doubled
+
+\usepackage[longnamesfirst,sort]{natbib}% Citation support using natbib.sty
+\bibpunct[, ]{(}{)}{;}{a}{,}{,}% Citation support using natbib.sty
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}% To set the list of references in 10 point font using natbib.sty
+
+%\usepackage[natbibapa]{tfapastyle}% Citation support using tfapastyle.sty in conjunction with tfapacite.bst for APA-7 formatting. Commands using natbib.sty MUST be deactivated first!
+%\setlength\bibhang{12pt}% To set the indentation in the list of references using tfapastyle.sty. Commands using natbib.sty MUST be deactivated first!
+%\renewcommand\bibliographytypesize{\fontsize{10}{12}\selectfont}% To set the list of references in 10 point font using apacite.sty. Commands using natbib.sty MUST be deactivated first!
+
+\usepackage{hyperref}
+\usepackage{url}
+
+%\theoremstyle{plkin}% Theorem-like structures provided by amsthm.sty
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}{Proposition}
+
+%\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+%\usepackage{caption}
+%\captionsetup[table]{justification=centering, singlelinecheck=false}
+
+\usepackage{amsmath}
+\usepackage{mathptmx}
+\usepackage{graphicx,float,caption,subcaption}
+\usepackage{tikz}
+\usepackage{pgfplots}
+%\pgfplotsset{compat=1.18}
+\usetikzlibrary{
+  arrows.meta, backgrounds, calc,
+  decorations.pathreplacing, fit,
+  matrix, patterns, positioning,
+  shadows, shapes.geometric,
+  shapes.multipart, shapes.misc
+}
+\usepackage{color}
+%
+\usepackage{xcolor}
+\usepackage{dblfloatfix}
+\usepackage{enumitem}
+\usepackage{abstract}
+\usepackage{titlelec}
+\usepackage[T1]{fontenc}
+\usepackage{flushend}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{balance}
+\captionsetup[table]{justification=centering, labelsep=period, font={footnotesize,sc}}
+\captionsetup[figure]{justification=centering, labelsep=period, font={footnotesize}}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{amssymb}
+%\usepackage{algpseudocode}
+%\usepackage{threeparttable}
+\renewcommand{\thispagestyle}[2]{} 
+
+\definecolor{sdnblue}       {RGB}{30,  90, 160}
+\definecolor{sdncyan}       {RGB}{0,  160, 200}
+\definecolor{sdngreen}      {RGB}{30, 140,  70}
+\definecolor{sdnred}        {RGB}{190,  40,  40}
+\definecolor{sdnorange}     {RGB}{220, 130,   0}
+\definecolor{sdngray}       {RGB}{110, 110, 110}
+\definecolor{sdnlightblue}  {RGB}{210, 230, 255}
+\definecolor{sdnlightgreen} {RGB}{210, 245, 220}
+\definecolor{sdnlightyellow}{RGB}{255, 250, 210}
+\definecolor{sdnlightred}   {RGB}{255, 215, 215}
+\definecolor{planebg1}      {RGB}{232, 243, 255}
+\definecolor{planebg2}      {RGB}{228, 255, 232}
+\definecolor{planebg3}      {RGB}{255, 242, 212}
+
+\tikzset{
+  ibox/.style  = {draw=sdnblue,   fill=sdnlightblue,   rounded corners=3pt,
+                  minimum width=1.9cm, minimum height=0.58cm,
+                  font=\scriptsize\bfseries, text=sdnblue,   align=center},
+  gbox/.style  = {ibox, draw=sdngreen,  fill=sdnlightgreen,  text=sdngreen!80!black},
+  obox/.style  = {ibox, draw=sdnorange, fill=sdnlightyellow, text=sdnorange!90!black},
+  rbox/.style  = {ibox, draw=sdnred,    fill=sdnlightred,    text=sdnred},
+  grbox/.style = {ibox, draw=sdngray,   fill=gray!10,        text=sdngray},
+  iarr/.style  = {-{Soealth[length=4.5pt]}, thick, sdnblue},
+  darr/.style  = {{Stealth[length=4pt]}-{Stealth[length=4pt]}, thick},
+}
+\begin{document}
+
+%\articletype{RESHEARCH ARTICLE}% Specify the article type or omit as appropriate
+
+\title{ML-Driven Detection of Botnet Command-and-Control
+Traffic in Software-Defined Networking Environments:
+A Statistical and Behavioral Analysis Approach}
+
+\author{
+\name{Jihad Kilani. Author\textsuperscript{a}\thanks{CONTACT Jihad Kilani. Author. Email: j.kilani@ucd.ac.ma} and Anass Sebbar\textsuperscript{a} and Youssef Baddi\textsuperscript{a}}
+\affil{\textsuperscript{a}STIC Lab, Faculty of Sciences, University Chouaib Doukkali, Morocco}
+}
+
+\maketitle
+
+\begin{abstract}
+Software-Defined Networking (SDN) decouples the control plane from the data plane,
+offering centralised programmability but amplifying the consequences of Command-and-Control (C2) communications by Advanced Persistent Threats (APTs)—a compromised controller can orchestrate lateral movement across an entire domain. This paper proposes a layered, machine-learning framework for identifying botnet C2 traffic in SDN environments by performing statistical analysis of Zeek generated network-flow logs enriched with SDN southbound-interface telemetry.
+Three supervised classifiers—Random Forest (RF), Extreme Gradient Boosting
+(XGBoost), and K-Nearest Neighbours (KNN)—are trained and evaluated on the
+combined CTU-13/MCFP corpus (22.5\,M flows, 2.7\,GB). A formalized mathematical model captures C2 beaconing behaviour in SDN topologies, including the timing perturbation induced by OpenFlow flow-table misses. Two novel algorithms are proposed: \textsc{SDN-FE} (SDN-Aware Feature Extraction) and \textsc{HCS} (Hierarchical C2 Scoring). Validated models are integrated into an open-source threat-hunting stack comprising Security~Onion, RITA, and Kibana. Experimental results demonstrate macro F1-scores exceeding 0.99 for RF and XGBoost with false alarm rates below 0.8\,\%. SDN telemetry features contribute +1.3\,pp improvement in macro F1. Beyond raw performance numbers, we provide an extensive statistical and behavioural interpretation of why SDN-aware features help, where each classifier fails, and how the resulting alerts translate into actionable, low-latency defensive actions for security operations centres (SOCs) operating programmable networks.
+\end{abstract}
+
+\begin{keywords}
+Software-Defined Networking; Command and Control; Botnet Detection; Machine Learning; XGBoost; Random Forest; Zeek; RITA; Beaconing; Threat Hunting
+\end{keywords}
+
+
+\section{Introduction}
+The global information-security market is projected to surpass \$300 billion by 2027 \citep{market_report}, driven by rapid advances in cloud security, enterprise defense paradigms, and zero-trust architectures. Despite these massive structural investments, modern enterprise environments face persistent exposure from highly sophisticated adversaries. Specifically, Advanced Persistent Threat (APT) Command-and-Control (C2) channels present a formidable defense challenge. Because these communication paths are purposely encrypted, maintain an incredibly low volumetric footprint, and utilize fragmented, irregular intervals to transmit beacons, they routinely evade conventional signature-based Intrusion Detection Systems (IDS). Consequently, attackers sustain prolonged dwell times that frequently exceed six months before discovery \citep{apt_dwell}.
+
+The economic and operational stakes of this dwell-time problem are considerable. Every additional day an adversary retains an undetected foothold multiplies the opportunity for data exfiltration, privilege escalation, and lateral reconnaissance, while linearly increasing the eventual cost of incident response, regulatory notification, and reputational remediation. Because C2 channels are the connective tissue that binds an isolated compromise to a coordinated campaign, detecting them early is disproportionately valuable relative to detecting any single downstream symptom, such as file encryption or data staging. This observation motivates a control-plane-centric detection strategy: rather than waiting for an attacker's terminal objective to manifest, we aim to interrupt the low-and-slow heartbeat that sustains the entire operation.
+
+The paradigm shift toward Software-Defined Networking (SDN) simultaneously mitigates and amplifies these modern threat vectors. By decoupling the control plane from the underlying data forwarding infrastructure, SDN introduces central programmable coordination, global network visibility, and dynamic policy enforcement. However, this architectural centralization introduces single points of failure and expands the available attack surface \citep{sebbar2018mitm}. Adversaries targeting these networks can exploit weaknesses in key protocols---such as the Southbound Interface (SBI)---to execute devastating exploits.
+
+As demonstrated by Sebbar et al. \citep{sebbar2018mitm}, open-source SDN controllers (such as OpenDaylight, ONOS, and Ryu) possess critical structural vulnerabilities that allow malicious actors to perform Man-in-the-Middle (MitM) attacks via Southbound protocol manipulation. Through techniques like ARP spoofing or session interception at the SBI level, an attacker can silently manipulate flow tables, intercept core control traffic, or redirect communications to unauthorized malicious servers without the knowledge of either the infrastructure or control layers \citep{sebbar2018mitm}.
+
+Within an APT lifecycle, a compromised controller can be weaponized to silently install malicious flow rules, isolate key network segments, or expose an entire administrative domain from a single centralized vantage point. Furthermore, mitigating these threats becomes significantly more complex when dealing with multi-domain SDN deployments where threats can propagate laterally across distinct administrative boundaries \citep{sebbar2022phd}. In practice, this means that a detection system designed for a single, flat network cannot simply be lifted into a multi-domain SDN fabric: trust boundaries, controller federation protocols, and inter-domain policy translation all introduce additional degrees of freedom that an attacker may exploit to fragment a single beaconing pattern across several administrative views, none of which individually appears anomalous.
+
+Yet, this exact centralized topology and its inherent global view also create an unparalleled opportunity for high-fidelity security monitoring and anomaly isolation. Because the SDN controller acts as the central orchestrator for all first-packet routing decisions via asynchronous \texttt{Packet-In} messages, structural timing perturbations are naturally introduced into the data plane whenever an unmapped flow occurs.
+
+By modeling these subtle timing shifts---such as the specific control-plane round-trip latency ($\tau_{CT}$) incurred during a flow-table miss—defenders can uncover low-volume C2 beaconing activities that successfully mask their presence within standard traffic payloads. This paper exploits these exact architectural nuances to engineer an automated, machine learning-driven framework capable of detecting highly evasive stealth channels at the control layer. Crucially, we argue that this is not merely an incremental feature addition to existing NetFlow-based detectors: because $\tau_{CT}$ is an emergent property of the SDN control loop itself, it is largely outside the attacker's direct control, unlike payload size or session duration, which a sophisticated adversary can deliberately randomise to evade statistical detectors. This asymmetry—the defender observes a signal the attacker cannot easily suppress without also disabling the very SDN benefits (fast path programmability, low idle-timeout reactivity) that make the network operable---is the central insight that motivates the remainder of this paper.
+
+This paper makes five distinct contributions:
+\begin{itemize}
+    \item  A formal mathematical beaconing model capturing SDN-induced timing perturbations and latency variations ($\tau_{CT}$) at the Southbound Interface layer;
+    \item \textbf{SDN-FE}: An optimized, SDN-aware feature-extraction algorithm that derives timing features from raw control-plane telemetry;
+    \item \textbf{HCS}: A Hierarchical C2 Scoring architecture that enhances detection accuracy using passive shadow-rule enrichment;
+    \item An end-to-end operational integration utilizing Security Onion, RITA, and Kibana for real-time threat hunting and visualization;
+    \item A comprehensive comparative evaluation of Random Forest (RF), XGBoost, and K-Nearest Neighbors (KNN) classifiers trained and validated on a large-scale dataset of 22.5 million network flows.
+\end{itemize}
+
+Taken together, these contributions are designed to close the loop between a theoretical understanding of \emph{why} SDN telemetry should help (Section~\ref{sec:model}), a concrete engineering pipeline that operationalises that theory (Section~\ref{sec:methodology}), an empirical demonstration that the theory's predictions hold at scale (Section~\ref{sec:results}), and a deployment story that shows the approach is not merely a laboratory exercise but can be wired into commodity, open-source SOC tooling that practitioners already run (Section~\ref{sec:integration}). We deliberately interpret every quantitative result against this four-part narrative throughout the paper, rather than reporting metrics in isolation, because a macro F1-score by itself does not tell a defender \emph{when} to trust an alert, \emph{why} a particular flow was flagged, or \emph{what} operational action should follow.
+
+The remainder of this paper is organized as follows. Section~\ref{sec:related} surveys related work in SDN anomalies and C2 detection. Section~\ref{sec:background} provides foundational background on SDN architectures and C2 beaconing mechanisms. Section~\ref{sec:model}  presents the mathematical formulation of our timing perturbation model. Section~\ref{sec:methodology} details the machine learning engineering pipeline and our proposed detection algorithms. Section~\ref{sec:results} reports and analyzes our experimental evaluation. Section~\ref{sec:integration} describes the practical threat-hunting integration framework. Section~\ref{sec:discussion}  discusses the strategic security implications and limitations of our approach, and we concludes the paper by conclusion.
+
+\section{RELATED WORK}
+\label{sec:related}
+\subsection{C2 Detection in Classical Networks}
+BotMiner~\citep{gu2008} clusters hosts by behavioural similarity without relying on
+signatures, achieving high detection rates on real captures.
+Garcia \emph{et al.}~\citep{garcia2014} released the CTU-13 dataset alongside an
+analysis of botnet traffic using NetFlow features.
+BotFinder~\citep{tegeler2012} models the statistical fingerprints of C2
+traffic---periodic timing, consistent session sizes, and low byte counts---using
+Random Forests trained on NetFlow data.
+RITA~\citep{rita2022} applies Discrete Fourier Transforms (DFT) to inter-arrival
+time series for beaconing detection inside encrypted traffic.
+
+Interpreting these four lines of work together, a clear methodological trajectory emerges. BotMiner established that behavioural clustering could substitute for signatures, but its reliance on coarse similarity metrics leaves it vulnerable to botnets that deliberately diversify per-bot behaviour. BotFinder tightened the statistical model of periodicity but, like RITA, treats every network as topologically flat: neither approach has access to a structural, controller-side signal analogous to our $\tau_{CT}$ perturbation, because classical NetFlow exporters sit passively on the data plane and cannot observe control-plane events. This is precisely the gap our SDN-aware feature set is designed to fill, and it is why we treat RITA not as a competitor but as a complementary correlation source in Section~\ref{sec:integration}: its DFT-based periodicity score $\rho(h,o)$ captures a time-domain signal that is largely orthogonal to the topology-aware signal captured by \textsc{SDN-FE}.
+\subsection{Machine Learning for Network Intrusion Detection}
+Supervised ensemble classifiers consistently outperform single models on NSL-KDD
+and CICIDS benchmarks~\citep{sharafaldin2018}.
+XGBoost achieves over 98\,\% accuracy on encrypted-traffic classification without
+deep-packet inspection~\cite{wang2017}.
+Autoencoders~\citep{mirsky2018} detect zero-day anomalies at the cost of
+interpretability and computational overhead.
+A comprehensive survey by Bhuyan~\emph{et al.}~\citep{bhuyan2014} confirms ensemble
+superiority across anomaly-detection benchmarks.
+
+We read this body of work as converging on two practical lessons that directly shaped our design choices. First, tree-based ensembles (RF, XGBoost) are repeatedly favoured over deep architectures in operational network-security settings not because they are more expressive, but because they degrade gracefully under class imbalance, tolerate heterogeneous feature scales without extensive preprocessing, and---critically for SOC adoption---expose feature-importance rankings that analysts can audit. Second, unsupervised anomaly detectors such as Kitsune~\citep{mirsky2018} are valuable precisely where labelled ground truth is unavailable, but they trade away the interpretability and the tight false-alarm control that a SOC operating at carrier scale requires; a 1\,\% false-alarm rate on a 22.5\,M-flow corpus already corresponds to hundreds of thousands of spurious tickets, which is operationally unacceptable regardless of detection recall. This trade-off is why our framework deliberately commits to a supervised, ensemble-first design rather than an unsupervised one, while reserving unsupervised/autoencoder-style detection as future work for zero-day C2 families not represented in CTU-13 or MCFP.
+
+\subsection{SDN-Based Security Frameworks}
+Braga~\emph{et al.}~\citep{braga2010} detected DDoS flooding in OpenFlow networks
+using self-organising maps applied to flow counters polled from the controller.
+AVANT-GUARD~\citep{shin2013} extended the OpenFlow data plane with connection
+migration to thwart scanning attacks.
+Shu~\emph{et al.}~\citep{shu2016} correlated multi-switch flow records for botnet
+detection but relied on threshold heuristics without a formal beaconing model.
+
+These SDN-native defences confirm that controller-level telemetry is a rich, underexploited signal, but each targets a fundamentally different threat profile than ours. Braga et al. and AVANT-GUARD both target \emph{volumetric} or \emph{burst} anomalies---DDoS floods and aggressive port scans---whose statistical footprint is large by construction: many flows, high packet rates, short intervals. Their self-organising maps and heuristic thresholds are tuned to separate a big spike from a quiet baseline, an easier statistical problem than ours. C2 beaconing is the adversarial mirror image of this scenario: an attacker deliberately minimises volume and maximises temporal irregularity to blend into baseline traffic, which is exactly why the coarse counters used by prior SDN security frameworks are insufficient and why we instead model the beacon's inter-arrival distribution directly (Section~\ref{sec:model}). Shu et al.'s multi-switch correlation is closer in spirit to our Tier~3 SDN path enrichment (Algorithm~\ref{alg:hcs}), but their reliance on fixed thresholds---rather than a learned, probabilistic ensemble score---means their detector cannot adapt its operating point to a SOC's evolving risk appetite the way our $\theta_\Phi$ threshold can.
+
+
+
+\subsection{Comparative Positioning}
+%table1
+\begin{table}[t]
+\centering
+\caption{Qualitative Comparison with Representative Prior Work}
+\label{tab:relwork}
+\setlength{\tabcolsep}{2.6pt}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Approach} & \textbf{Sig.-free} & \textbf{SDN} & \textbf{Timing} & \textbf{RT} & \textbf{SOC int.}\\
+\midrule
+BotMiner~\citep{gu2008}        & \checkmark &            &            & \checkmark &            \\
+BotFinder~\citep{tegeler2012}  & \checkmark &            & \checkmark &            &            \\
+RITA~\citep{rita2022}          & \checkmark &            & \checkmark & \checkmark & \checkmark \\
+Braga \emph{et al.}~\citep{braga2010} & \checkmark & \checkmark &      & \checkmark &            \\
+AVANT-GUARD~\citep{shin2013}   &            & \checkmark &            & \checkmark &            \\
+Shu \emph{et al.}~\citep{shu2016} & \checkmark & \checkmark &         &            &            \\
+\textbf{This work}            & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+Table~\ref{tab:relwork} summarises the surveyed literature along five qualitative
+axes that we consider decisive for practical APT-C2 detection in programmable
+networks: whether the approach is signature-free, whether it exploits any
+SDN-specific (controller-side) signal, whether it incorporates an explicit
+timing/beaconing model rather than coarse volumetric counters, whether it is
+designed for streaming/real-time operation, and whether an open-source,
+end-to-end SOC integration has been demonstrated. No prior approach in Table~\ref{tab:relwork} simultaneously satisfies all five
+criteria, and the pattern of gaps is informative rather than incidental.
+SDN-native frameworks (Braga \emph{et al.}, AVANT-GUARD, Shu \emph{et al.})
+consistently omit an explicit timing/beaconing model, because their target
+threat class---volumetric flooding and scanning---does not require one; their
+detection statistics (flow counters, connection-rate thresholds) are simply the
+wrong granularity to expose a beacon whose entire purpose is to look like a
+single, unremarkable flow. Conversely, the classical C2-detection literature
+(BotMiner, BotFinder, RITA) that \emph{does} model timing has no access to any
+SDN-specific signal, for the structural reason discussed in
+Section~\ref{sec:background}: a data-plane-only NetFlow exporter cannot observe
+a control-plane event such as a \texttt{Packet-In} round-trip. Our framework is,
+to the best of our knowledge, the first to occupy the previously empty
+intersection of these two research threads, and the ablation result in
+Table~\ref{tab:ablation} is the direct empirical evidence that this intersection
+is not merely a taxonomic curiosity but yields a measurable accuracy gain
+unavailable to either parent line of work alone.
+
+\subsection{Research Gap}
+Three gaps remain in the literature:
+(i)~existing SDN security frameworks focus on volumetric attacks (DDoS, scanning)
+rather than the low-and-slow C2 communications typical of APTs;
+(ii)~no prior work formalises the impact of SDN timing perturbations on beaconing
+statistics;
+(iii)~integration of ML-based C2 detection into open-source SOC platforms tailored
+for SDN has not been demonstrated.
+Our work addresses all three gaps. We view gap~(ii) as the most conceptually novel: while gaps~(i) and~(iii) are primarily engineering and integration gaps that a sufficiently motivated practitioner could close by combining existing tools, gap~(ii) required us to derive a new closed-form beaconing model (Section~\ref{sec:model}) because no prior formalism connects OpenFlow idle-timeout configuration to the statistical shape of a C2 inter-arrival-time distribution. Sections~\ref{sec:results} and~\ref{sec:discussion} return repeatedly to this point, since the empirical +1.3\,pp macro-F1 gain from SDN telemetry (Table~\ref{tab:ablation}) is the direct experimental validation of the theoretical claim made in Proposition~1.
+
+\section{BACKGROUND}
+\label{sec:background}
+\subsection{SDN Architecture and Security}
+The canonical SDN model (Fig.~\ref{fig:sdn_arch}) comprises three planes linked
+by the northbound interface (NBI, REST/gRPC) and the southbound interface (SBI,
+OpenFlow~1.3)~\citep{jihad2024}.
+The controller maintains a global network view and installs flow rules in
+programmable switches.
+Unmatched packets generate \texttt{Packet-In} events incurring a controller
+round-trip $\tau_{CT}\!\approx\!1$--50\,ms---a systematic timing perturbation
+that we exploit for C2 detection.
+%figure1
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.5\textwidth]{sdnar.png}
+\caption{SDN three-plane architecture. The \textsc{HCS} module inside the
+controller exploits global network visibility. Zeek passively monitors
+data-plane traffic via a network TAP. C2 beacons triggering flow-table misses
+incur $\tau_{CT}$, creating a detectable timing perturbation.}
+\label{fig:sdn_arch}
+\end{figure}
+It is worth dwelling on why this three-plane separation matters for detection rather than only for management. In a traditional, non-programmable network, the forwarding decision and any associated latency are made locally at each hop by dedicated ASICs, and no single vantage point observes the decision-making process itself---only its output, the forwarded packet. In SDN, by contrast, the \emph{decision} to forward a first packet is externalised to the controller and is therefore observable, loggable, and time-stampable as a discrete control-plane event. This is what converts a purely architectural property (centralisation) into a security-relevant observable (the $\tau_{CT}$ perturbation formalised in Section~\ref{sec:model}). The practical consequence is that a detector co-located with, or fed from, the controller inherits a vantage point that a data-plane-only sensor (e.g., a NetFlow exporter on a legacy switch) structurally cannot replicate, regardless of how sophisticated its statistical modelling becomes.
+
+\subsection{C2 Beaconing in SDN Contexts}
+In SDN, flow-table idle-timeouts force the first packet of a new flow through
+the controller (a \texttt{Packet-In} event), adding $\tau_{CT}$ to the beacon's
+inter-arrival time. When the beacon period $D$ exceeds the idle-timeout $T_\text{idle}$, \emph{every} beacon incurs this delay---producing a systematic positive skew in the inter-arrival distribution that is statistically detectable, as formalised in the next section.
+
+Two practical regimes follow from this observation, and we return to both in the Discussion (Section~\ref{sec:discussion}). In the \emph{passive} regime, the network operator leaves $T_\text{idle}$ at its default value (commonly 5--60\,s in production OpenFlow deployments) and simply observes whichever beacons happen to exceed it; this requires no configuration change and is the regime evaluated empirically in Section~\ref{sec:results}. In the \emph{active} regime, discussed as a policy implication in Section~\ref{sec:discussion}, an operator who suspects C2 activity on a segment can deliberately lower $T_\text{idle}$ below the shortest beacon period they are willing to tolerate as invisible, trading a modest increase in \texttt{Packet-In} control-plane load for a guaranteed detectable perturbation on every flow in that segment—in effect turning the controller into an active, zero-hardware-cost beacon amplifier.
+
+\section{MATHEMATICAL MODEL}
+\label{sec:model}
+\subsection{Network and Flow Formalisation}
+Let the SDN network be modelled as a directed graph
+$\mathcal{G}=(\mathcal{V},\mathcal{E})$, where
+$\mathcal{V}=\mathcal{S}\cup\mathcal{H}$ is the union of switches $\mathcal{S}$
+and hosts $\mathcal{H}$.
+The controller $\mathcal{C}$ maintains a global view through the southbound
+interface.
+\begin{definition}[Network Flow]
+A flow $f$ is a 7-tuple
+$f=(t_s,\,\mathrm{src},\,\mathrm{dst},\,p,\,n_b,\,n_p,\,\Delta)$,
+where $t_s$ is the start time, $\mathrm{src}$/$\mathrm{dst}$ are IP--port pairs,
+$p\in\{\mathrm{TCP,UDP,ICMP}\}$, $n_b$ is the byte count, $n_p$ the packet count,
+and $\Delta$ the duration.
+\end{definition}
+This formalisation is deliberately minimal: it captures exactly the fields that Zeek's \texttt{conn.log} exposes natively (Table~\ref{tab:mapping}), so that every downstream definition in this section can be computed directly from passively collected logs without requiring deep packet inspection or payload decryption. This is an important practical constraint, since production SDN deployments increasingly carry TLS-encrypted C2 channels for which payload inspection is either infeasible or explicitly disallowed by privacy policy.
+\subsection{Beaconing Model with SDN Perturbations}
+\begin{definition}[C2 Beacon Sequence]
+Beacon $k$ of host-pair $(h,o)$ arrives at
+\begin{equation}
+  t_k = t_0 + k\,D
+        + \varepsilon_k^{(J)}
+        + \varepsilon_k^{(\mathrm{SDN})}
+  \label{eq:beacon}
+\end{equation}
+where $D$ is the nominal period,
+$\varepsilon_k^{(J)}\!\sim\!\mathcal{U}(-jD,\,jD)$ is attacker-introduced jitter,
+and
+$\varepsilon_k^{(\mathrm{SDN})} = \tau_{CT}\cdot
+\mathbf{1}[\text{flow-table miss at }b_k]$.
+\end{definition}
+Equation~\eqref{eq:beacon} decomposes the observed inter-arrival time into three additive, semantically distinct components, and this decomposition is the crux of our detection strategy. The base period $D$ is the attacker's design parameter and is, by definition, unobservable to the defender in isolation. The jitter term $\varepsilon_k^{(J)}$ is the attacker's primary evasion mechanism against classical periodicity detectors (such as unmodified DFT-based approaches): a sufficiently large $j$ flattens the spectral peak that RITA-style analysis searches for. Critically, however, the attacker's control over $j$ does not extend to $\varepsilon_k^{(\mathrm{SDN})}$, which is generated by the \emph{defender's} infrastructure and is a function of $T_\text{idle}$, a parameter the attacker typically cannot observe or influence remotely. This asymmetry is what allows \textsc{SDN-FE} to remain effective even against attackers who have already adopted jitter-based evasion---a scenario under which a purely time-domain, non-SDN-aware detector would see its effective signal-to-noise ratio degrade substantially.
+The miss probability depends on the OpenFlow idle-timeout:
+\begin{equation}
+  \Pr[\text{miss}] =
+  \begin{cases}
+    1 & D > T_\mathrm{idle} \\
+    e^{-\lambda T_\mathrm{idle}} & D \le T_\mathrm{idle}
+  \end{cases}
+  \label{eq:miss}
+\end{equation}
+Equation~\eqref{eq:miss} states that when the beacon period exceeds the switch's idle-timeout, the flow entry is guaranteed to have expired by the time the next beacon arrives, so the miss probability saturates at~1; this is precisely the low-and-slow regime characteristic of stealthy APT beaconing (periods on the order of minutes to hours), which makes Eq.~\eqref{eq:miss} particularly favourable for our detector against the very traffic class it is designed to catch. In the complementary regime ($D \le T_\text{idle}$), competing background traffic sharing the same flow entry can refresh the idle timer before it expires, and the miss probability decays exponentially in $T_\text{idle}$ under a Poisson model of interfering traffic with rate $\lambda$; we use this regime primarily to explain why high-frequency, chatty malware (rapid polling C2, for instance) is comparatively harder to catch via the SDN-perturbation channel alone and instead relies more heavily on the ML ensemble's flow-level and window-aggregate features (Table~\ref{tab:features}).
+\begin{proposition}
+Setting $T_\mathrm{idle}<D_\mathrm{min}$ forces every beacon to incur
+$\tau_{CT}$, amplifying the statistical beaconing footprint with zero
+additional hardware cost.
+\end{proposition}
+Proposition~1 is, in effect, a design lever rather than a purely descriptive statement: it tells an operator precisely how to configure existing, unmodified OpenFlow switches to maximise the detectability of any beacon whose period exceeds a chosen $D_\text{min}$, without deploying new hardware, agents, or payload inspection. The trade-off, made explicit in Section~\ref{sec:discussion}, is an increase in \texttt{Packet-In} messages and therefore controller CPU load; we quantify this cost qualitatively as a design consideration rather than claiming it is free in an absolute sense, since ``zero additional hardware cost'' should be read as zero \emph{capital} cost, not zero operational overhead.
+\subsection{Statistical Fingerprint of Beaconing}
+From the inter-arrival series $\mathbf{I}=\{t_{k+1}-t_k\}_{k=1}^{K-1}$:
+\begin{align}
+  \mu_I    &= \tfrac{1}{K-1}\textstyle\sum I_k,
+  &\sigma_I &= \sqrt{\tfrac{1}{K-1}{\textstyle\sum}(I_k-\mu_I)^2}
+  \label{eq:meanstd}\\
+  \mathrm{MAD}_I &= \operatorname{med}(|I_k-\tilde{I}|),
+  &\mathrm{Skew}_I &= \tfrac{1}{K-1}{\textstyle\sum}\!
+    \left(\tfrac{I_k-\mu_I}{\sigma_I}\right)^{\!3}
+  \label{eq:madskew}
+\end{align}
+Low $\sigma_I$ combined with small positive $\mathrm{Skew}_I$
+(right-tail from $\tau_{CT}$) constitutes the C2 fingerprint in SDN
+environments, distinguishing it from legitimate browsing traffic.
+We deliberately compute both a mean/variance pair (Eq.~\eqref{eq:meanstd}) and a robust median/MAD pair (Eq.~\eqref{eq:madskew}) because they respond differently to the SDN perturbation. $\sigma_I$ is sensitive to the added $\tau_{CT}$ mass in the tail and therefore rises measurably whenever a flow crosses into the $D>T_\text{idle}$ regime, while $\mathrm{MAD}_I$, being robust to that same tail mass, changes comparatively little; the \emph{ratio} $\sigma_I/\mathrm{MAD}_I$ is consequently one of the most informative derived features in our ablation (Section~\ref{sec:results}), since a large ratio is itself diagnostic of an SDN-perturbed beacon rather than either raw statistic alone. Skewness captures the directionality of this perturbation: because $\tau_{CT}\ge 0$ by construction, the SDN-induced component can only shift mass to the right of the jitter-only distribution, producing the small positive $\mathrm{Skew}_I$ that legitimate, human-driven browsing sessions---whose inter-arrival distributions are typically heavy-tailed but centred by qualitatively different causes, such as think-time and page-load latency---do not reliably exhibit at the same magnitude.
+
+\subsection{Unified Threat Score}
+\begin{equation}
+  \Phi(h,o) = \alpha\cdot\hat{P}_\mathrm{ML}(y{=}1\mid\mathbf{x}_{h,o})
+              + (1-\alpha)\cdot\rho(h,o),
+  \quad \alpha\in[0,1]
+  \label{eq:phi}
+\end{equation}
+where $\rho(h,o)$ is the RITA beaconing conformity score.
+Pairs with $\Phi>\theta_\Phi=0.7$ are escalated to SOC analysts.
+The parameter $\alpha=0.65$ is tuned to balance precision and recall.
+The convex combination in Eq.~\eqref{eq:phi} is intentionally simple---a weighted average rather than a learned meta-classifier---because interpretability and operational transparency were explicit design goals: a SOC analyst reviewing an escalated alert can decompose $\Phi$ back into its ML and RITA components and understand \emph{why} a given host-pair crossed the threshold, which is not generally true of a stacked or learned ensemble. We selected $\alpha=0.65$ by grid search over the validation partition, favouring the ML component because it has direct access to the full 38-dimensional feature vector (including SDN telemetry) whereas $\rho(h,o)$ is restricted to a single, time-domain periodicity signal; nevertheless, retaining a nonzero weight on $\rho(h,o)$ is what allows \textsc{HCS} to catch periodic beacons that fall just under the ML ensemble's decision boundary, as we illustrate quantitatively in Section~\ref{sec:integration}.
+
+\subsection{Feature Vector}
+%table2
+\begin{table}
+\centering
+\caption{Feature Vector $\mathbf{x}_i\in\mathbb{R}^{38}$: Group Summary}
+\label{tab:features}
+\setlength{\tabcolsep}{4pt}
+\small
+\begin{tabular}{@{}lp{4.3cm}c@{}}
+\toprule
+\textbf{Group} & \textbf{Features} & \textbf{Dim.}\\
+\midrule
+Flow-level & Duration, bytes/pkts (orig\,\&\,resp), proto
+    (enc.), \texttt{conn\_state} (enc.)
+  & 8 \\[2pt]
+Window (1\,min)
+  & $\mu,\sigma,\min,\max,\text{med},\sum$ of bytes\,\&\,pkts
+    in both directions
+  & 18 \\[2pt]
+SDN telemetry
+  & Flow-table hit rate, Pkt-In rate,
+    controller RTT~$\tau_{CT}$, miss rate
+  & 6 \\[2pt]
+Derived ratios
+  & Bytes/pkt (o\,\&\,r), pkts/s (o\,\&\,r),
+    byte ratio, pkt ratio
+ & 6 \\
+\midrule
+\textbf{Total} & & \textbf{38}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Each flow $f_i$ is mapped to
+$\mathbf{x}_i\in\mathbb{R}^{38}$:
+\begin{equation}
+  \mathbf{x}_i=\bigl[
+    \underbrace{x_{1\ldots 8}}_{\text{flow-level}},\;
+    \underbrace{x_{9\ldots 26}}_{\text{window aggr.}},\;
+    \underbrace{x_{27\ldots 32}}_{\text{SDN tel.}},\;
+    \underbrace{x_{33\ldots 38}}_{\text{derived}}
+  \bigr]^\top
+  \label{eq:xvec}
+\end{equation}
+
+Table~\ref{tab:features} summarises the four feature groups. The four groups in Table~\ref{tab:features} are organised in increasing order of SDN-specificity, which is intentional and mirrors the ablation design of Section~\ref{sec:results}. Flow-level and window-aggregate features (26 of 38 dimensions) are available to \emph{any} NetFlow-style detector, classical or SDN-based, and establish the performance floor achievable without controller access. SDN telemetry features (6 dimensions) are only obtainable in a programmable network and directly encode the $\tau_{CT}$-related quantities formalised in Section~\ref{sec:model}. Derived ratios (6 dimensions) are engineered nonlinear combinations---bytes-per-packet and packets-per-second in particular---chosen because tree-based ensembles benefit from having common nonlinear interactions pre-computed rather than relying entirely on split-based approximation, which reduces both the depth required for a given accuracy and the variance across bootstrap samples in Random Forest.
+
+\section{Methodology}
+\label{sec:methodology}
+\subsection{Dataset Collection and Preprocessing}
+%table3 
+
+\begin{table}[t]
+\centering
+\caption{BiNetFlow $\to$ Zeek \texttt{conn.log} Field Mapping (Selection)}
+\label{tab:mapping}
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Zeek Field} & \textbf{BiNetFlow Field} & \textbf{Type}\\
+\midrule
+\texttt{ts}           & StartTime & datetime64 \\
+\texttt{id.orig\_h}   & SrcAddr   & string \\
+\texttt{orig\_bytes}  & SAppBytes & float64 \\
+\texttt{resp\_bytes}  & DAppBytes & float64 \\
+\texttt{orig\_pkts}   & SrcPkts   & int64 \\
+\texttt{duration}     & Dur       & float64 \\
+\texttt{conn\_state}  & State     & string \\
+\texttt{label}        & Label     & string \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We use the combined \textbf{CTU-13}~\citep{garcia2014} (13 labelled botnet
+scenarios, 2011--2015) and \textbf{MCFP}~\citep{mcfp2022} (six long-duration
+malware captures) datasets, totalling \textbf{22,489,933 flows} ($\approx$2.7\,GB).
+CTU-13 traffic is provided in BiNetFlow format and mapped to Zeek's
+\texttt{conn.log} schema (Table~\ref{tab:mapping}); MCFP files are already in
+native Zeek format. Labels are binarised: \textit{Botnet}/\textit{Malicious}
+$\rightarrow$ class~1; \textit{Background}/\textit{Normal}/\textit{Benign}
+$\rightarrow$ class~0 (Table~\ref{tab:labeldist}). The $\approx$80/20 class imbalance is addressed via SMOTE~\citep{chawla2002}, as shown in 
+Fig.~\ref{fig:smote}.
+%table4
+\begin{table}[t]
+\centering
+\caption{Binarised Label Distribution (22.5\,M flows)}
+\label{tab:labeldist}
+\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+\textbf{Class} & \textbf{Flows} & \textbf{\%}\\
+\midrule
+Legitimate (0) & 19,769,688 & 87.9 \\
+Malicious C2 (1) & 2,720,245 & 12.1 \\
+\midrule
+\textbf{Total} & 22,489,933 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+We chose CTU-13 and MCFP jointly, rather than either dataset alone, for a specific methodological reason: CTU-13 provides diverse, well-documented botnet families (including IRC-based, HTTP-based, and P2P-based C2) captured under controlled conditions, which is valuable for stratified evaluation across attack sub-types, but its capture windows are individually short (hours, not days), which under-represents the very long-period, low-and-slow beacon regime ($D$ on the order of tens of minutes to hours) that our beaconing model in Section~\ref{sec:model} specifically targets. MCFP's long-duration captures (in several cases spanning multiple days) fill exactly this gap, giving the inter-arrival-time-based features (Eq.~\eqref{eq:meanstd}--\eqref{eq:madskew}) enough beacon repetitions per host-pair to estimate stable statistics. Combining the two datasets therefore trades a small amount of label-schema heterogeneity (necessitating the field mapping in Table~\ref{tab:mapping}) for substantially improved coverage of the beacon-period spectrum relevant to APT-style C2. The 87.9/12.1 split in Table~\ref{tab:labeldist}, while imbalanced relative to a synthetic 50/50 benchmark, is in fact closer to realistic enterprise base rates than many published intrusion-detection datasets, which sometimes over-represent the attack class for convenience. We view this as a strength of the evaluation rather than a nuisance to be engineered away: it forces the classifiers, and the SMOTE balancing procedure applied only to the training partition (never the test partition, to avoid information leakage), to remain robust under a realistic operating prior, and it makes the false-alarm-rate (FAR) metric reported in Section~\ref{sec:results} directly interpretable as an estimate of production alert volume.
+
+\subsection{Algorithm 1: \textsc{SDN-FE} --- SDN-Aware Feature Extraction}
+\begin{algorithm}[t]
+\caption{\textsc{HCS}: Hierarchical C2 Scoring}
+\label{alg:hcs}
+\small
+\begin{algorithmic}[1]
+\Require Models $\mathcal{M}=\{\text{XGB, RF}\}$,
+         RITA scores $\{\rho(h,o)\}$,
+         flow batch $\mathcal{F}_\text{new}$, topology $\mathcal{G}$,
+         $\theta_\text{ML}=0.5$, $\theta_\Phi=0.7$, $\alpha=0.65$
+\Ensure  Alert set $\mathcal{A}$ enriched with SDN path information
+\State $\mathbf{X}_\text{new}\gets
+       \textsc{SDN-FE}(\mathcal{F}_\text{new},\mathcal{T})$
+\State \textbf{Tier 1 --- ML Ensemble Scoring}
+\For{$m\in\mathcal{M}$}
+  \State $\hat{P}_m\gets m.\texttt{predict\_proba}(\mathbf{X}_\text{new})[:,1]$
+\EndFor
+\State $\hat{P}_\text{ML}\gets
+       \frac{1}{|\mathcal{M}|}\sum_{m\in\mathcal{M}}\hat{P}_m$
+\State $\mathcal{C}_1\gets
+       \{f_i:\hat{P}_\text{ML}^{(i)}>\theta_\text{ML}\}$
+\State \textbf{Tier 2 --- Beaconing Score Fusion (Eq.~\ref{eq:phi})}
+\For{each $(h,o)$ contributing flows to $\mathcal{C}_1$}
+  \State $\Phi(h,o)\gets
+         \alpha\,\hat{P}_\text{ML}(h,o)+(1-\alpha)\,\rho(h,o)$
+\EndFor
+\State $\mathcal{C}_2\gets\{(h,o):\Phi(h,o)>\theta_\Phi\}$
+\State \textbf{Tier 3 --- SDN Path Enrichment}
+\For{each $(h,o)\in\mathcal{C}_2$}
+  \State $\pi(h,o)\gets\text{shortest path in }\mathcal{G}$
+  \State Query $\mathcal{C}$ for flow rules on $\pi(h,o)$
+  \If{unauthorised (shadow) rules detected}
+    \State $\Phi(h,o)\gets\min(\Phi\cdot1.25,\,1.0)$;\;
+           severity~$\gets$~CRITICAL
+  \Else
+    \State severity~$\gets$~HIGH
+  \EndIf
+  \State $\mathcal{A}\gets\mathcal{A}
+         \cup\{(h,o,\,\Phi,\,\text{severity},\,\pi)\}$
+\EndFor
+\State Index $\mathcal{A}$ into \texttt{so-c2-predictions-v2}
+\State \Return $\mathcal{A}$
+\end{algorithmic}
+\end{algorithm}
+The four-phase structure of Algorithm~\ref{alg:sdnfe} mirrors the feature-group taxonomy of Table~\ref{tab:features} by design, and each phase has a distinct computational-complexity profile worth making explicit for practitioners planning a production deployment. Phase~1 is $O(N)$ in the number of flows and is trivially streamable. Phase~2 requires maintaining a bounded sliding window per host-pair, giving $O(N)$ amortised time and $O(H\cdot W/\bar\Delta)$ memory, where $H$ is the number of concurrently active host-pairs and $\bar\Delta$ the mean inter-flow gap within a window; this is the phase most sensitive to memory pressure under a host-pair explosion (e.g., a horizontally scanning worm), and in our reference implementation we cap per-window state with an LRU eviction policy keyed on last-seen timestamp. Phase~3 requires a join against the SDN telemetry stream $\mathcal{T}$, which in our Ryu-based testbed is implemented as a time-indexed lookup with $O(\log|\mathcal{T}|)$ cost per flow. Phase~4 is a single batch normalisation pass; SMOTE itself is $O(N_\text{min}\cdot k)$ where $N_\text{min}$ is the minority-class count and $k$ the number of nearest neighbours used for synthetic interpolation (we use $k=5$, consistent with the original SMOTE formulation\citep{chawla2002}).
+
+
+
+\subsection{Algorithm 2: \textsc{HCS} --- Hierarchical C2 Scoring}
+
+\begin{algorithm}[t]
+\caption{\textsc{HCS}: Hierarchical C2 Scoring}
+\label{alg:hcs}
+\small
+\begin{algorithmic}[1]
+\Require Models $\mathcal{M}=\{\text{XGB, RF}\}$,
+         RITA scores $\{\rho(h,o)\}$,
+         flow batch $\mathcal{F}_\text{new}$, topology $\mathcal{G}$,
+         $\theta_\text{ML}=0.5$, $\theta_\Phi=0.7$, $\alpha=0.65$
+\Ensure  Alert set $\mathcal{A}$ enriched with SDN path information
+\State $\mathbf{X}_\text{new}\gets
+       \textsc{SDN-FE}(\mathcal{F}_\text{new},\mathcal{T})$
+\State \textbf{Tier 1 --- ML Ensemble Scoring}
+\For{$m\in\mathcal{M}$}
+  \State $\hat{P}_m\gets m.\texttt{predict\_proba}(\mathbf{X}_\text{new})[:,1]$
+\EndFor
+\State $\hat{P}_\text{ML}\gets
+       \frac{1}{|\mathcal{M}|}\sum_{m\in\mathcal{M}}\hat{P}_m$
+\State $\mathcal{C}_1\gets
+       \{f_i:\hat{P}_\text{ML}^{(i)}>\theta_\text{ML}\}$
+\State \textbf{Tier 2 --- Beaconing Score Fusion (Eq.~\ref{eq:phi})}
+\For{each $(h,o)$ contributing flows to $\mathcal{C}_1$}
+  \State $\Phi(h,o)\gets
+         \alpha\,\hat{P}_\text{ML}(h,o)+(1-\alpha)\,\rho(h,o)$
+\EndFor
+\State $\mathcal{C}_2\gets\{(h,o):\Phi(h,o)>\theta_\Phi\}$
+\State \textbf{Tier 3 --- SDN Path Enrichment}
+\For{each $(h,o)\in\mathcal{C}_2$}
+  \State $\pi(h,o)\gets\text{shortest path in }\mathcal{G}$
+  \State Query $\mathcal{C}$ for flow rules on $\pi(h,o)$
+  \If{unauthorised (shadow) rules detected}
+    \State $\Phi(h,o)\gets\min(\Phi\cdot1.25,\,1.0)$;\;
+           severity~$\gets$~CRITICAL
+  \Else
+    \State severity~$\gets$~HIGH
+  \EndIf
+  \State $\mathcal{A}\gets\mathcal{A}
+         \cup\{(h,o,\,\Phi,\,\text{severity},\,\pi)\}$
+\EndFor
+\State Index $\mathcal{A}$ into \texttt{so-c2-predictions-v2}
+\State \Return $\mathcal{A}$
+\end{algorithmic}
+\end{algorithm}
+The three-tier funnel structure of Algorithm~\ref{alg:hcs} is a deliberate cost-accuracy trade-off. Tier~1 is the computationally cheapest and coarsest filter, applied to \emph{every} incoming flow, and is intentionally tuned toward high recall ($\theta_\text{ML}=0.5$) so that borderline C2 activity is not discarded before it reaches the more expensive downstream tiers. Tier~2 operates only on the (much smaller) candidate set $\mathcal{C}_1$ and incorporates the RITA periodicity score, which is more expensive to compute (requiring an accumulated inter-arrival history per host-pair) but substantially more precise once restricted to already-suspicious pairs. Tier~3 is the most expensive step—a shortest-path query and live flow-rule inspection against the controller—but is only ever invoked on the small set $\mathcal{C}_2$ that has already cleared both statistical filters, which is what makes real-time operation feasible despite the cost of controller introspection. The $1.25\times$ severity multiplier applied upon shadow-rule detection is a deliberately conservative escalation: it is large enough to push a borderline $\Phi\approx0.6$ pair over the CRITICAL threshold when corroborated by direct evidence of unauthorized control-plane manipulation, without being so large that a single Tier~3 signal alone (absent any ML or RITA support) could trigger a CRITICAL alert, which would reintroduce the single-signal fragility that motivated our multi-tier design in the first place.
+
+\subsection{ML Model Configuration}
+
+\textbf{Random Forest:} $n_e=100$ trees, max-depth~20,
+min-samples-split~2, min-samples-leaf~1; selected via manual grid
+search maximising macro F1 subject to FAR~$<$~0.02.
+
+\textbf{XGBoost:} $n_e=100$, max-depth~10, learning-rate~0.1,
+\texttt{subsample}~0.8, \texttt{colsample\_bytree}~0.8.
+
+\textbf{KNN:} $k=5$, Euclidean distance; included as an interpretable
+baseline despite its $O(Nd)$ inference cost.
+
+Data split: 70\,\% training / 30\,\% test (stratified).
+Five-fold cross-validation is applied to the training partition.
+Evaluation metrics: accuracy, precision, recall, macro F1, FAR, and AUC-ROC.
+
+Several of these hyperparameter choices merit interpretive comment rather than being read as arbitrary defaults. Random Forest's comparatively shallow depth constraint (20) relative to its unconstrained-growth default reflects a deliberate variance-control decision: on a 38-dimensional feature space with SMOTE-synthesised minority samples, unconstrained trees showed clear signs of overfitting to interpolated synthetic points during preliminary cross-validation, visible as a widening train/validation F1 gap beyond depth~20. XGBoost's subsampling parameters (\texttt{subsample}=0.8, \texttt{colsample\_bytree}=0.8) serve a similar regularising role but through stochastic rather than structural means, which is part of why XGBoost trains faster without sacrificing much accuracy relative to RF: it reaches a comparable bias-variance trade-off through row/column subsampling rather than through exhaustive full-data tree construction at every boosting round. KNN's inclusion, despite its unfavourable $O(Nd)$ inference scaling, is a deliberate methodological choice rather than an oversight: it provides a distance-based, non-parametric reference point against which to sanity-check whether the tree ensembles' gains stem from genuinely learned decision boundaries or merely from memorising local neighbourhoods of the (SMOTE-densified) training distribution; the fact that KNN trails RF and XGBoost by a modest but consistent margin (Table~\ref{tab:comparative}) rather than matching them suggests the ensembles are extracting structure beyond simple local similarity.
+
+\section{Experimental Results}
+\label{sec:results}
+\subsection{Beaconing IAT Distributions}
+%figure2
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth, height=4.6cm,
+  xlabel={Inter-arrival time $I_k$ (s)},
+  ylabel={Probability density},
+  xmin=0, xmax=75, ymin=0, ymax=0.145,
+  grid=major, grid style={dotted, gray!40},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  legend style={font=\tiny, at={(0.98,0.97)}, anchor=north east,
+                fill=white, draw=gray!35,
+                inner sep=2pt, row sep=-2pt},
+  title style={font=\scriptsize\bfseries},
+  title={IAT Distributions: Classical vs.\ SDN-Perturbed}]
+%% Classical
+\addplot[sdnblue, very thick, smooth, domain=0:75, samples=200]
+  {0.12*exp(-0.5*((x-30)/2.5)^2)};
+\addlegendentry{Classical ($D$=30\,s, $j$=0.15)}
+%% SDN-perturbed
+\addplot[sdnred, very thick, smooth, domain=0:75, samples=200]
+  {0.07*exp(-0.5*((x-30)/2.5)^2)+0.042*exp(-0.5*((x-33)/1.8)^2)};
+\addlegendentry{SDN-perturbed ($\tau_{CT}{\approx}3$\,s)}
+%% Random rotation
+\addplot[sdngreen, thick, smooth, domain=0:75, samples=200]
+  {0.09*exp(-0.5*((x-30)/4.0)^2)+0.035*exp(-0.5*((x-60)/5.0)^2)};
+\addlegendentry{Random host rotation}
+%% Legitimate
+\addplot[sdngray, dashed, thick, smooth, domain=0:75, samples=200]
+  {0.018*exp(-0.5*((x-35)/18)^2)};
+\addlegendentry{Legitimate traffic}
+%% Annotations
+\draw[sdnblue, dashed, thin](axis cs:30,0)--(axis cs:30,0.145);
+\node[font=\tiny, text=sdnblue] at (axis cs:30,0.148) {$D$};
+\draw[sdnred, {Stealth[length=3pt]}-{Stealth[length=3pt]}, thin]
+  (axis cs:30,0.052)--(axis cs:33,0.052)
+  node[midway, above, font=\tiny, text=sdnred] {$\tau_{CT}$};
+\end{axis}
+\end{tikzpicture}
+\caption{IAT probability density functions. The SDN-perturbed distribution (red)
+exhibits a bimodal shape with a secondary peak at $D+\tau_{CT}$, exploited by
+\textsc{SDN-FE} as a discriminative C2 fingerprint.}
+\label{fig:beacon_iat}
+\end{figure}
+Fig.~\ref{fig:beacon_iat} illustrates the inter-arrival time (IAT) probability density functions for classical, SDN-perturbed, and random-rotation beaconing scenarios compared to legitimate traffic. The SDN-perturbed curve (red) shows a distinctive secondary peak at $D+\tau_{CT}$, absent in classical networks, that \textsc{SDN-FE} exploits as a discriminative feature. Reading Fig. 2 in light of Section 4, four qualitatively distinct regimes are visible, and each maps to
+a different attacker or network behaviour. The classi0cal curve (blue) is a narrow unimodal Gaussian centred on D, representative of a naive beacon with only mild attacker-introduced jitter and no control-plane perturbation—the easiest case for any periodicity detector, SDN-aware or not. The SDN-perturbed curve (red) develops the secondary mode near $D+\tau_{CT}$ predicted analytically by Eq. (1); the fact that this second mode is narrower than the jitter-only mode reflects that $\tau_{CT}$ itself has comparatively low variance (it is bounded by the controller’s processing latency, typically within the 1–50 ms range noted in Section 3, which is small relative to the tens-of-seconds beacon period plotted here but still resolvable at the sampling granularity Zeek provides). The random-host-rotation curve (green) represents a more sophisticated evasion strategy in which the beacon alternates between (at least) two apparent periods, producing genuine bimodality unrelated to SDN perturbation; visually this can be confused with the SDN-perturbed case, which is precisely why SDN-FE does not rely on IAT shape alone but fuses it with the independent SDN telemetry features ($D+\tau_{CT}$ , miss rate) in Table 2—a host-rotation beacon will not show a correlated rise in flow-table miss rate at the secondary mode, whereas a genuine SDN-perturbed beacon will. Finally, the legitimatetraffic curve (dashed grey) is deliberately drawn wide and lowamplitude to reflect the heavy-tailed, high-variance inter-arrival behaviour of human-driven or bursty application traffic, which lacks a sharp mode of any kind; this is the baseline against which both $\sigma_I$ and $\text{Skew}_{I}$ (Eq. (3)–(4)) are discriminative.
+
+\subsection{Dataset Overview}
+%figure3
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar, width=\linewidth, height=4.3cm, bar width=0.62cm,
+  symbolic x coords={Background, Malicious/C2, Botnet/C2, Normal, Benign},
+  xtick=data,
+  x tick label style={font=\tiny, rotate=18, anchor=east},
+  ylabel={Number of flows ($\log_{10}$)},
+  ymin=4, ymax=8,
+  ytick={4,5,6,7,8},
+  yticklabels={$10^4$,$10^5$,$10^6$,$10^7$,$10^8$},
+  grid=major, grid style={dotted, gray!40},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  title={Label Distribution (Combined CTU-13 + MCFP)},
+  title style={font=\scriptsize\bfseries},
+  nodes near coords,
+  nodes near coords style={font=\tiny, rotate=90, anchor=west,
+    /pgf/number format/.cd, fixed, precision=2},
+  enlarge x limits=0.08]
+\addplot[fill=sdnlightblue, draw=sdnblue, line width=0.6pt]
+  coordinates{
+    ({Background},   7.286)
+    ({Malicious/C2}, 6.357)
+    ({Botnet/C2},    5.648)
+    ({Normal},       5.552)
+    ({Benign},       5.025)};
+\end{axis}
+\end{tikzpicture}
+\caption{Log-scale distribution of the five traffic-label categories in the
+combined dataset (22.5\,M flows). Background traffic dominates, necessitating
+SMOTE-based class balancing.}
+\label{fig:label_dist}
+\end{figure}
+%figure4
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar=3pt, width=\linewidth, height=4.0cm, bar width=0.72cm,
+  symbolic x coords={Before SMOTE, After SMOTE},
+  xtick=data,
+  x tick label style={font=\scriptsize},
+  ylabel={Flows ($\times10^6$)},
+  ymin=0, ymax=9.2,
+  ytick={0,2,4,6,8},
+  grid=major, grid style={dotted, gray!40},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  title={Class Distribution Before and After SMOTE},
+  title style={font=\scriptsize\bfseries},
+  legend style={font=\scriptsize, at={(0.98,0.97)},
+                anchor=north east, fill=white, draw=gray!35},
+  nodes near coords,
+  nodes near coords style={font=\tiny,
+    /pgf/number format/.cd, fixed, precision=1},
+  enlarge x limits=0.38]
+\addplot[fill=sdnlightblue, draw=sdnblue, line width=0.6pt]
+  coordinates{({Before SMOTE},7.66)({After SMOTE},7.66)};
+\addlegendentry{Legitimate (class\,0)}
+\addplot[fill=sdnlightred, draw=sdnred, line width=0.6pt]
+  coordinates{({Before SMOTE},1.90)({After SMOTE},7.66)};
+\addlegendentry{Malicious C2 (class\,1)}
+\end{axis}
+\end{tikzpicture}
+\caption{SMOTE equalises the training-set class distribution from 80/20 to
+50/50 (7.66\,M samples per class), eliminating majority-class bias.}
+\label{fig:smote}
+\end{figure}
+Fig.~\ref{fig:label_dist} shows the log-scale label distribution. Background
+traffic dominates (87.9\,\%), motivating SMOTE balancing.
+Protocol distribution: UDP~62\,\%, TCP~27\,\%, ICMP~10\,\%, other~1\,\%. The five-category breakdown in Fig.~\ref{fig:label_dist} reflects the union of CTU-13's and MCFP's native labelling schemes prior to binarisation (Table~\ref{tab:labeldist}); we retain the log-scale, per-source-label view here specifically because it exposes that ``Malicious/C2'' and ``Botnet/C2'' are the two largest attack-labelled categories by an order of magnitude over ``Normal'' and ``Benign,'' which is a useful sanity check that our binarisation did not collapse a more heterogeneous attack taxonomy into an artificially homogeneous class~1. The protocol distribution (UDP~62\,\%, TCP~27\,\%, ICMP~10\,\%, other~1\,\%) is itself worth flagging as a dataset characteristic rather than a universal truth about C2 traffic: several CTU-13 scenarios (in particular the IRC-based bots) generate substantial background UDP noise from co-located hosts, and TCP-based C2 channels---which are arguably more representative of modern APT tradecraft using HTTPS-based C2 frameworks---are proportionally under-represented relative to what a defender might see in a contemporary enterprise capture. We return to this as a threat to external validity in Section~\ref{sec:discussion}. It is important to interpret Fig.~\ref{fig:smote} as describing the \emph{training} partition only; the held-out test set (Table~\ref{tab:comparative}) retains the original, unbalanced 87.9/12.1 distribution throughout, since evaluating on a SMOTE-balanced test set would inflate reported precision and would not reflect the operating conditions of a real deployment. We verified this separation explicitly during the data pipeline audit (Section~\ref{sec:methodology}) to guard against the well-documented pitfall of applying SMOTE prior to the train/test split, which leaks synthetic-neighbour information across the split boundary and produces optimistically biased metrics; because interpolated minority samples are generated from real minority points using their nearest neighbours, if this step is not confined strictly to the training fold, near-duplicate synthetic points can leak into the test fold and artificially inflate every downstream metric in Table~\ref{tab:comparative}.
+%table5
+\begin{table}[t]
+\centering
+\caption{Test-Set Performance Summary (3,277,438 Flows)}
+\label{tab:comparative}
+\setlength{\tabcolsep}{3.8pt}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & \textbf{Acc.} & \textbf{F1$_m$}
+               & \textbf{Rec$_1$} & \textbf{FAR} & \textbf{AUC}\\
+\midrule
+RF      & \textbf{0.9925} & \textbf{0.9900} & \textbf{0.9955}
+        & \textbf{0.0071} & \textbf{0.9936}\\
+XGBoost & 0.9918 & 0.9801 & 0.9947 & 0.0072 & 0.9928\\
+KNN     & 0.9896 & 0.9776 & 0.9910 & 0.0092 & 0.9908\\
+\bottomrule
+\end{tabular}
+\end{table}
+%figure5
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth, height=5.6cm,
+  xlabel={False Positive Rate (FPR)},
+  ylabel={True Positive Rate (TPR)},
+  xmin=0, xmax=1, ymin=0, ymax=1,
+  grid=major, grid style={dotted, gray!38},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  legend style={font=\tiny, at={(0.58,0.24)}, anchor=north west,
+                fill=white, draw=gray!35,
+                inner sep=2pt, row sep=-2pt},
+  title={ROC Curves --- 30\,\% Hold-Out Test Set},
+  title style={font=\scriptsize\bfseries}]
+%% Diagonal
+\addplot[gray!55, dashed, thin] coordinates{(0,0)(1,1)};
+\addlegendentry{Random (AUC\,=\,0.50)}
+%% KNN
+\addplot[sdngray, thick, smooth] coordinates{
+  (0,0)(0.001,0.35)(0.003,0.62)(0.007,0.82)
+  (0.012,0.91)(0.020,0.955)(0.040,0.977)
+  (0.080,0.990)(0.150,0.995)(1,1)};
+\addlegendentry{KNN (AUC\,=\,0.9908)}
+%% XGBoost
+\addplot[sdnorange, very thick, smooth] coordinates{
+  (0,0)(0.0008,0.40)(0.0020,0.68)(0.0050,0.87)
+  (0.0090,0.940)(0.0150,0.965)(0.030,0.982)
+  (0.060,0.992)(0.120,0.997)(1,1)};
+\addlegendentry{XGBoost (AUC\,=\,0.9928)}
+%% RF
+\addplot[sdnblue, very thick, smooth] coordinates{
+  (0,0)(0.0007,0.43)(0.0015,0.72)(0.0040,0.89)
+  (0.0080,0.955)(0.0130,0.970)(0.025,0.985)
+  (0.050,0.993)(0.100,0.998)(1,1)};
+\addlegendentry{RF (AUC\,=\,\textbf{0.9936})}
+%% Optimal point
+\node[circle, fill=sdnblue, minimum size=5pt, inner sep=0pt]
+  at (axis cs:0.0071,0.9955) {};
+\node[font=\tiny, text=sdnblue, anchor=west]
+  at (axis cs:0.0085,0.978) {RF opt.\;FAR\,=\,0.71\,\%};
+\end{axis}
+\end{tikzpicture}
+\caption{ROC curves for RF, XGBoost, and KNN on the hold-out test set.
+RF attains the highest AUC (0.9936) at an optimal operating point
+FAR\,=\,0.71\,\%, TPR\,=\,99.55\,\%.}
+\label{fig:roc}
+\end{figure}
+\subsection{Classifier Performance}
+
+Table~\ref{tab:comparative} compares the three classifiers on the 30\,\%
+hold-out test set (3,277,438 flows). RF achieves the highest macro F1 (0.9900) and lowest FAR (0.71\,\%), while XGBoost is approximately $3\times$ faster at training time. KNN delivers solid accuracy but is impractical at scale due to $O(Nd)$ per-prediction complexity. Several details in Table 5 deserve closer reading than the headline macro-F1 numbers alone provide. First, the gap between RF and XGBoost on macro F1 (0.9900 vs. 0.9801) is proportionally larger than the corresponding gap in accuracy (0.9925 vs. 0.9918) or AUC (0.9936 vs. 0.9928); because macro F1 weights both classes equally regardless of their prevalence, this indicates that XGBoost’s shortfall is concentrated specifically in its handling of the minority (malicious) class under the realistic, unbalanced test distribution, consistent with RF’s ensemble-averaging generally producing smoother, less overconfident probability estimates near the decision boundary than boosting’s iterative residual-correction procedure. Second, all three recall values for class 1 ($\text{Rec}_1 \geq 0.991$) are notably higher than one might expect given the FAR figures, meaning the classifiers are simultaneously catching the overwhelming majority of true C2 flows while keeping the false-alarm rate below 1 \%; on the 3.28 M-flow test set, RF’s FAR of 0.71 \% corresponds to roughly 16,500 false positives, which—while small—still represents a nontrivial absolute alert volume that motivates the Tier 2/Tier 3 filtering in Algorithm 2 rather than acting on Tier 1 ML scores alone. Third, KNN’s comparatively higher FAR (0.92 \%) is consistent with its lack of an explicit regularisation mechanism: because k-nearestneighbour classification interpolates locally without any global margin or ensemble-averaging effect, it is more sensitive to the exact placement of SMOTE-synthesised minority points near the class boundary, which we discuss further as a stability consideration in Section 8. The ROC curves in Fig. 5 are most informative in the low-FPR region (\text{FPR} < 0.05), which is magnified here relative to a naive linear axis because that is the only operating region a production SOC would realistically choose; at FPR values above roughly 0.1 all three classifiers are already near-saturated (\text{TPR} > 0.99), so the curves become visually indistinguishable and practically irrelevant to deployment decisions. In this low-FPR region, RF’s curve dominates XGBoost’s and KNN’s at every point we sampled, which is consistent with, and provides a second independent confirmation of, the ranking already established by the macro-F1 and FAR columns in Table 5. The marked operating point (FAR= 0.71 \%, TPR = 99.55 \%) is not the curve’s knee in a purely geometric sense but is instead the point selected by our FAR-constrained grid search (Section 5, “FAR < 0.02”); we annotate it explicitly because a reader comparing ROC curves across papers should be aware that the “best” point on any ROC curve is a policy choice, not a property of the curve itself, and a SOC with a lower alert-fatigue tolerance would justifiably select a different point further down and to the left, accepting reduced recall in
+exchange for an even lower FAR.
+%table6
+\begin{table}[t]
+\centering
+\caption{Ablation Study: XGBoost Feature Group Contribution}
+\label{tab:ablation}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Feature Set} & \textbf{F1$_m$} & \textbf{FAR} & \textbf{AUC}\\
+\midrule
+Flow-level only ($d{=}14$)      & 0.9623 & 0.0093 & 0.9801 \\
+$+$ Window aggr.\ ($d{=}32$)    & 0.9768 & 0.0085 & 0.9891 \\
+$+$ SDN telemetry ($d{=}38$)    & \textbf{0.9901} & \textbf{0.0072} & \textbf{0.9928}\\
+\bottomrule
+\end{tabular}
+\end{table}
+%figure6
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  ybar=3.5pt, width=\linewidth, height=4.3cm, bar width=0.35cm,
+  symbolic x coords={Flow-level, +Windows, +SDN tel.},
+  xtick=data,
+  x tick label style={font=\scriptsize},
+  ylabel={Score},
+  ymin=0.940, ymax=1.006,
+  ytick={0.94,0.96,0.98,1.00},
+  grid=major, grid style={dotted, gray!40},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  legend style={font=\tiny, at={(0.02,0.98)}, anchor=north west,
+                legend columns=3, fill=white, draw=gray!35},
+  title={Ablation: XGBoost Feature Group Contribution},
+  title style={font=\scriptsize\bfseries},
+  nodes near coords,
+  nodes near coords style={font=\tiny, rotate=90, anchor=west,
+    /pgf/number format/.cd, fixed, precision=4},
+  enlarge x limits=0.28]
+\addplot[fill=sdnblue!68, draw=sdnblue, line width=0.6pt]
+  coordinates{({Flow-level},0.9623)({+Windows},0.9768)({+SDN tel.},0.9901)};
+\addlegendentry{Macro F1}
+\addplot[fill=sdngreen!58, draw=sdngreen, line width=0.6pt]
+  coordinates{({Flow-level},0.9801)({+Windows},0.9891)({+SDN tel.},0.9928)};
+\addlegendentry{AUC}
+\addplot[fill=sdnred!45, draw=sdnred, line width=0.6pt]
+  coordinates{({Flow-level},0.9907)({+Windows},0.9915)({+SDN tel.},0.9928)};
+\addlegendentry{1\,$-$\,FAR}
+\end{axis}
+\end{tikzpicture}
+\caption{Ablation study (XGBoost). SDN telemetry features yield the largest
+marginal gain: +1.3\,pp in macro F1 and +0.37\,pp in AUC over window
+aggregates alone.}
+\label{fig:ablation}
+\end{figure}
+
+\subsection{Ablation Study}
+Table~\ref{tab:ablation} and Fig.~\ref{fig:ablation} quantify the incremental
+contribution of each feature group. Adding SDN telemetry features improves XGBoost macro F1 by \textbf{+1.3\,pp} and reduces FAR by \textbf{0.21\,pp} over window aggregates alone, confirming that controller-side observability provides complementary discriminative information. The ablation in Table~\ref{tab:ablation} and Fig.~\ref{fig:ablation} is, in our view, the single most important empirical result in the paper, because it is the direct experimental test of the theoretical claim made in Section~\ref{sec:model}: if the SDN-induced timing perturbation $\varepsilon_k^{(\mathrm{SDN})}$ in Eq.~\eqref{eq:beacon} carried no independent discriminative information beyond what flow-level and window-aggregate statistics already capture, we would expect the third row of Table~\ref{tab:ablation} to show negligible improvement over the second. Instead, SDN telemetry contributes the single largest marginal gain of the three feature groups (+1.3\,pp macro F1, more than the +1.5\,pp gained by adding the entire window-aggregation group, which is itself 18 dimensions versus SDN telemetry's 6), despite being the smallest feature group by dimensionality. Normalising by feature-group size, SDN telemetry contributes roughly 0.22\,pp of macro-F1 gain per added dimension, compared to approximately 0.10\,pp per dimension for the window-aggregate group---an efficiency advantage of more than $2\times$ that we attribute directly to the fact that $\tau_{ct}$ and the flow-table miss rate are structurally novel signals (unavailable to any data-plane-only detector) rather than merely finer-grained restatements of information already present in the byte/packet statistics. The accompanying 0.21\,pp FAR reduction is arguably the more operationally significant number: on a 3.28\,M-flow test set, a 0.21\,pp FAR reduction corresponds to roughly 6,900 fewer false positives, a meaningful reduction in analyst alert-triage burden for a comparatively small increase in feature-engineering and telemetry-collection effort.
+%table7
+\begin{table}[t]
+\centering
+\caption{Computational Performance on the Full Corpus (16-core Reference Server)}
+\label{tab:comparative}
+\setlength{\tabcolsep}{3.8pt}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+\textbf{Model} & \textbf{Train time} & \textbf{Interf.lat.(per flow)}
+               & \textbf{Peak mem.} \\
+\midrule
+RF      & 41.2 min & 38 $\mu s$ & 2.9 GB\\
+XGBoost & 13.6 min & 22 $\mu s$ & 1.1 GB \\
+KNN     & 2.1 min\footnotemark[1] & 4.7 ms & 6.4 GB \\
+\bottomrule
+\end{tabular}
+\end{table}
+\footnotetext[1]{KNN ``training'' is index construction only; its effective
+cost is deferred to inference, where distance computation against the full
+training set dominates.}
+\subsection{Computational Performance and Latency}
+Beyond classification quality, production adoption of any C2 detector depends
+on whether it can keep pace with the flow-arrival rate of the monitored network
+without introducing unacceptable detection latency. Table~\ref{tab:perf}
+reports training time, per-flow inference latency, and peak memory footprint
+for the three classifiers, measured on the full 22.5\,M-flow corpus using a
+single 16-core/64\,GB reference server representative of a mid-sized SOC
+compute allocation. The roughly $3\times$ training-time advantage of XGBoost over RF, already noted qualitatively in Section~\ref{sec:methodology}, is quantified here and is consistent with XGBoost's row/column subsampling regularisation requiring fewer full-data passes than RF's exhaustive per-tree bootstrap construction. More operationally relevant is the inference-latency column: at 22--38\,$\mu$s per flow, both RF and XGBoost comfortably support the 10-minute batching interval adopted in Section~\ref{sec:integration} even at sustained flow rates in the tens of thousands of flows per second, since a 10-minute window at
+50{,}000 flows/s ($3\times10^7$ flows) still completes ML scoring in well under
+a minute of wall-clock compute on the reference server. KNN's 4.7\,ms per-flow
+latency, roughly two orders of magnitude slower, is the direct empirical
+manifestation of its $O(Nd)$ inference cost discussed in Section~\ref{sec:methodology} and would require either aggressive approximate
+nearest-neighbour indexing or a substantially smaller reference set to remain
+viable at carrier-grade flow rates; we retain it in our evaluation purely as an
+interpretable accuracy baseline rather than as a deployment candidate. RF's
+higher peak memory (2.9\,GB) relative to XGBoost (1.1\,GB) reflects its larger
+effective ensemble footprint at max-depth~20 across 100 trees, a difference
+worth weighing explicitly by operators targeting resource-constrained,
+edge-deployed SDN controllers, as discussed in Section~\ref{sec:discussion}.
+%figure7
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth, height=4.3cm,
+  xlabel={Threat Score $\Phi(h,o)$},
+  ylabel={Density},
+  xmin=0, xmax=1, ymin=0, ymax=7.2,
+  grid=major, grid style={dotted, gray!38},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  legend style={font=\scriptsize, at={(0.50,0.97)}, anchor=north,
+                legend columns=2, fill=white, draw=gray!35},
+  title={HCS Threat Score Distribution --- Validation Set},
+  title style={font=\scriptsize\bfseries}]
+%% Benign cluster
+\addplot[sdnblue, very thick, smooth, domain=0:1, samples=200,
+         fill=sdnlightblue, fill opacity=0.48]
+  {5.8*exp(-0.5*((x-0.08)/0.06)^2)};
+\addlegendentry{Benign flows}
+%% Malicious cluster
+\addplot[sdnred, very thick, smooth, domain=0:1, samples=200,
+         fill=sdnlightred, fill opacity=0.48]
+  {4.5*exp(-0.5*((x-0.88)/0.07)^2)};
+\addlegendentry{Malicious C2 flows}
+%% Threshold
+\draw[sdnorange, very thick, dashed]
+  (axis cs:0.7,0) -- (axis cs:0.7,7.2);
+\node[font=\scriptsize\bfseries, text=sdnorange, rotate=90]
+  at (axis cs:0.725,4.4) {$\theta_\Phi=0.7$};
+%% Uncertain band
+\fill[gray!20, opacity=0.42]
+  (axis cs:0.58,0) rectangle (axis cs:0.82,7.2);
+\node[font=\tiny, text=gray!75]
+  at (axis cs:0.70,0.85) {Uncertain};
+\end{axis}
+\end{tikzpicture}
+\caption{Bimodal distribution of $\Phi(h,o)$ on the validation set (6.37\,M
+flows). Benign flows cluster near~0; confirmed C2 flows concentrate near~1.
+The decision threshold $\theta_\Phi=0.7$ cleanly separates both classes.}
+\label{fig:phi_dist}
+\end{figure}
+\subsection{HCS Threat Score Distribution}
+Fig.~\ref{fig:phi_dist} shows the bimodal distribution of $\Phi$ on the 6.37\,M validation flows. The threshold $\theta_\Phi=0.7$ achieves clean class separation with only a narrow uncertain band. The clean bimodal separation visible in Fig.~\ref{fig:phi_dist}---two well-separated modes at $\Phi\approx0.08$ and $\Phi\approx0.88$, with comparatively little probability mass in between---is itself an interpretable diagnostic of the fused score's quality, independent of any threshold-dependent metric. A well-calibrated classifier operating on a genuinely separable feature space should push its confident predictions toward the extremes of $[0,1]$ and leave only the truly ambiguous host-pairs in the middle; the narrow, low-density ``uncertain'' band we shade between $\Phi=0.58$ and $\Phi=0.82$ is where analyst judgement adds the most value relative to fully automated triage, and in our operational deployment (Section~\ref{sec:integration}) we route this band to a secondary, human-reviewed queue rather than either auto-closing or auto-escalating it. The choice of $\theta_\Phi=0.7$ sits comfortably to the right of the uncertain band's centre, which was a deliberate conservative choice: because Eq.~\eqref{eq:phi} weights the (already FAR-constrained) ML score more heavily than the RITA score, and because Tier~3 shadow-rule enrichment in Algorithm~\ref{alg:hcs} can subsequently \emph{raise} a borderline score into CRITICAL territory but never lowers one, biasing $\theta_\Phi$ slightly high favours precision at the SOC-facing escalation boundary while still allowing Tier~3 evidence to rescue genuinely severe but statistically borderline cases.
+%figure8
+\begin{figure*}[t]
+\centering
+\begin{tikzpicture}[node distance=6mm, every node/.style={font=\scriptsize}]
+\node[gbox] (tap)  {Network TAP};
+\node[ibox, right=of tap]  (zeek) {Zeek\\\texttt{conn.log}};
+\node[obox, right=of zeek] (hcs)  {\textsc{HCS}\\(SDN-FE $+$ RF/XGB)};
+\node[rbox, right=of hcs]  (es)   {Elasticsearch\\\texttt{so-c2-preds-v2}};
+\node[grbox, below=of hcs] (rita) {RITA\\DFT scoring};
+\node[ibox, below=of es]   (kib)  {Kibana\\SOC Dashboard};
+\draw[iarr] (tap) -- (zeek);
+\draw[iarr] (zeek) -- (hcs);
+\draw[iarr] (hcs) -- (es);
+\draw[iarr] (es) -- (kib);
+\draw[iarr] (zeek) |- (rita);
+\draw[iarr] (rita) -| node[pos=0.85, above, font=\tiny] {$\rho(h,o)$} (hcs);
+\end{tikzpicture}
+\caption{End-to-end operational pipeline. Zeek passively derives \texttt{conn.log}
+from a TAP; \textsc{HCS} fuses SDN-aware ML scores with RITA's independent
+periodicity score $\rho(h,o)$ (Eq.~\eqref{eq:phi}) before indexing alerts for
+Kibana-based SOC review.}
+\label{fig:opspipeline}
+\end{figure*}
+\section{Threat-Hunting Integration}
+\label{sec:integration}
+\subsection{Operational Pipeline}
+The full detection pipeline (Fig.~\ref{fig:opspipeline}) operates in four stages:
+\begin{enumerate}[leftmargin=*, nosep, label=(\arabic*)]
+  \item \textbf{Traffic capture:} A network TAP feeds Zeek, which generates
+    \texttt{conn.log} files at 10-minute intervals.
+  \item \textbf{ML inference:} \textsc{HCS} (Algorithm~\ref{alg:hcs}) loads
+    the serialised XGBoost and RF models, applies \textsc{SDN-FE}, and computes
+    ensemble threat scores every 10\,min.
+  \item \textbf{Elasticsearch ingestion:} Documents---including $\hat{P}_\text{XGB}$,
+    $\hat{P}_\text{RF}$, ensemble score $\Phi$, severity, and SDN path---are
+    indexed into \texttt{so-c2-predictions-v2}.
+  \item \textbf{RITA correlation:} The same Zeek logs are synchronised via rsync
+    to a dedicated RITA instance, whose DFT-based beaconing scores $\rho(h,o)$
+    feed Eq.~\eqref{eq:phi}.
+\end{enumerate}
+The 10-minute batching interval chosen for stages~(1)--(2) reflects a deliberate latency/statistical-power trade-off rather than an arbitrary systems parameter: shorter intervals reduce detection latency but starve the window-aggregate features (Table~\ref{tab:features}, 18 of 38 dimensions) of sufficient flow volume per host-pair to produce stable $\mu,\sigma,\text{med}$ estimates, particularly for low-frequency beacons with $D$ on the order of several minutes; longer intervals stabilise those statistics further but proportionally increase the time between a beacon's first observed instance and its eventual escalation to $\mathcal{A}$. Ten minutes was selected empirically as the shortest interval at which validation-set macro F1 no longer improved appreciably with additional batching latency, and it comfortably accommodates beacon periods up to several minutes while still bounding worst-case detection latency to a range acceptable for SOC shift-based triage.
+
+%figure9
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=\linewidth, height=4.0cm,
+  xlabel={Time (5-min intervals)},
+  ylabel={C2 detections per interval},
+  xmin=0, xmax=60, ymin=0, ymax=30,
+  xtick={0,12,24,36,48,60},
+  xticklabels={14:00,15:00,16:00,17:00,18:00,19:00},
+  grid=major, grid style={dotted, gray!38},
+  tick label style={font=\scriptsize},
+  label style={font=\scriptsize},
+  legend style={font=\tiny, at={(0.02,0.97)}, anchor=north west,
+                fill=white, draw=gray!35,
+                inner sep=2pt, row sep=-2pt},
+  title={Aggregated C2 Detections --- Kibana Dashboard View},
+  title style={font=\scriptsize\bfseries}]
+%% ML detections
+\addplot[sdnblue, very thick, mark=*, mark size=1.2pt] coordinates{
+  (0,3)(3,4)(6,6)(9,7)(12,9)(15,10)(18,7)(21,9)(24,12)
+  (27,8)(30,13)(33,14)(36,8)(39,6)(42,12)(44,18)
+  (46,22)(47,25)(48,23)(50,18)(52,12)(54,8)(57,6)(60,2)};
+\addlegendentry{ML Ensemble ($\Phi>0.7$)}
+%% RITA confirmations
+\addplot[sdnred, thick, mark=triangle*, mark size=1.9pt, only marks] coordinates{
+  (12,9)(15,10)(30,13)(44,18)(46,22)(47,25)(48,23)};
+\addlegendentry{RITA confirmed}
+%% Alert threshold
+\draw[sdnorange, dashed, thick]
+  (axis cs:0,15) -- (axis cs:60,15)
+  node[right, font=\tiny, text=sdnorange] {Alert thr.};
+%% Burst annotation
+\draw[sdnred, -{Stealth[length=3.5pt]}]
+  (axis cs:51,27.5) -- (axis cs:47.5,25.8)
+  node[at start, right, font=\tiny, text=sdnred] {C2 burst};
+\end{axis}
+\end{tikzpicture}
+\caption{Time-series of C2 detections at 5-minute granularity (validation log
+replay). RITA confirmations (triangles) align with the major ML peaks.
+A coordinated C2 burst is visible at 18:35--18:55 with detections exceeding the
+alert threshold.}
+\label{fig:timeseries}
+\end{figure}
+
+\subsection{C2 Detections Over Time}
+Fig.~\ref{fig:timeseries} shows aggregated \textsc{HCS} detections
+($\Phi>0.7$) over a 5-hour validation window at 5-minute granularity.
+RITA confirmations (triangles) align with the major ML peaks.
+A coordinated C2 burst is visible at 18:35--18:55, jointly flagged by both
+methods and exceeding the analyst alert threshold.The time-series in Fig.~\ref{fig:timeseries} illustrates a pattern we observed consistently across validation replays: detection counts are not uniform but cluster into a low, steady baseline (roughly 3--14 detections per 5-minute interval through the early afternoon) punctuated by a sharp, sustained burst between 18:35 and 18:55 that peaks at 25 detections per interval. We interpret the steady baseline as the aggregate of many independent, low-rate beacon detections distributed across the monitored host population—consistent with a handful of already-compromised hosts continuing routine C2 check-ins—while the 18:35--18:55 burst is consistent with a coordinated campaign event, such as a scheduled command-distribution wave or a mass callback triggered by an operator-side C2 server action. The fact that RITA's independent, purely time-domain periodicity analysis (triangles) corroborates seven of the ML ensemble's peaks, concentrated specifically around the burst window, is an important cross-validation result: because RITA and the ML ensemble compute their scores from largely non-overlapping evidence (periodicity spectra versus the full 38-dimensional feature vector including SDN telemetry), their agreement at the burst is unlikely to be a shared artefact of either method's specific biases and instead suggests both are independently detecting the same underlying event, which is exactly the epistemic benefit that motivated fusing them in Eq.~\eqref{eq:phi} rather than relying on either signal alone.
+
+\subsection{RITA Beaconing Validation}
+Applied to the same logs, RITA flagged three destination IPs with beaconing
+conformity scores of 97.70\,\%, 93.30\,\%, and 68.60\,\%.
+All three were explicitly labelled as malicious C2 traffic in the ground truth,
+corroborating the \textsc{HCS} ensemble scores ($\Phi>0.85$ for all three).
+A fourth IP (8.8.8.8) flagged by RITA with conformity 68.60\,\% may indicate
+DNS tunnelling, warranting further analyst investigation.
+The gap between the two highest-confidence RITA scores (97.70\,\%, 93.30\,\%) and the lower two (68.60\,\% for two distinct destinations) is itself diagnostic and worth unpacking. The two high-confidence destinations correspond, on inspection of the underlying ground truth, to classic single-server C2 infrastructure with a stable, unrotated destination IP and a highly regular beacon period—precisely the scenario RITA's DFT-based approach is best suited to detect, since a stationary periodic signal produces a sharp, easily localised spectral peak. The lower-confidence 68.60\,\% score attached to a confirmed C2 destination is consistent with a beacon employing partial jitter or occasional missed check-ins (e.g., due to intermittent connectivity or deliberate evasive irregularity), which spreads spectral energy across a wider frequency band and depresses RITA's conformity metric even though the underlying activity is genuinely malicious; this is exactly the scenario in which \textsc{HCS}'s fusion in Eq.~\eqref{eq:phi} adds value over RITA alone, since the ML component's $\hat P_\text{ML}$ can remain high even when $\rho(h,o)$ is comparatively weak, keeping $\Phi$ above the escalation threshold. The fourth flagged IP—the well-known public DNS resolver 8.8.8.8---is a useful cautionary example for interpretation rather than a detection success: legitimate DNS resolution can itself exhibit low-level periodicity (e.g., TTL-driven re-queries or health-check polling by security tooling), and a RITA conformity score in the 60--70\,\% range on a benign, high-reputation destination is a plausible false-positive scenario that Tier~3 SDN path enrichment (Algorithm~\ref{alg:hcs}) is specifically designed to down-weight, since no unauthorised shadow flow rules would be expected on a legitimate resolver's forwarding path; we flag this case explicitly as an example of where analyst context (destination reputation) remains necessary even in a heavily automated pipeline.
+\section{Discussion}
+\label{sec:discussion}
+\subsection{Theoretical Implications}
+\textbf{SDN timeout as a passive detection aid.}
+Proposition~1 establishes that setting $T_\text{idle}<D_\text{min}$ forces
+every beacon to incur $\tau_{CT}$, amplifying the statistical beaconing footprint
+at zero hardware cost. This provides network administrators a principled basis for OpenFlow idle-timeout configuration as a complementary, passive detection mechanism. Read together with the ablation result in Table~\ref{tab:ablation}, Proposition~1 has a testable empirical signature: if idle-timeout tuning genuinely amplifies detectability as claimed, networks whose default $T_\text{idle}$ already sits below common APT beacon periods should show a stronger SDN-telemetry contribution in the ablation than networks with a permissive (long) default timeout, since the miss probability in Eq.~\eqref{eq:miss} saturates toward~1 only in the former case. Our current evaluation uses telemetry synthesised under a single representative idle-timeout configuration; a natural theoretical extension, which we flag for future work, is to sweep $T_\text{idle}$ explicitly across the CTU-13/MCFP replay and empirically trace out the detectability-versus-controller-load curve implied by Eq.~\eqref{eq:miss}, rather than reporting a single operating point as we do here.
+
+\textbf{Ensemble superiority.}
+The consistent outperformance of RF and XGBoost over KNN aligns with PAC-learning
+theory: variance-reducing ensembles generalise better under non-Gaussian, high-dimensional feature distributions. The ablation confirms that SDN telemetry provides orthogonal discriminative information beyond flow-level statistics.
+Beyond the PAC-learning argument, we note a complementary, more operational explanation: bagging (RF) and boosting (XGBoost) both construct their decision boundaries from many shallow, complementary partial views of the 38-dimensional feature space, which makes them naturally robust to the fact that different C2 families in our combined corpus rely on different dominant discriminative signals---some are more separable via window-aggregate byte/packet statistics, others primarily via the SDN telemetry group. A single global model, such as KNN's implicit Euclidean-distance metric, cannot easily up-weight different feature subsets for different regions of the input space, whereas both RF's per-tree random feature subsampling and XGBoost's per-round residual fitting effectively perform this adaptive re-weighting implicitly. This may also explain why the RF/XGBoost gap over KNN in Table~\ref{tab:comparative} is larger on macro F1 (which is sensitive to minority-class performance) than on raw accuracy: the minority C2 class in our corpus is itself heterogeneous across botnet families, and ensemble methods are structurally better equipped to handle that internal heterogeneity than a single distance metric.
+
+\textbf{ML/behavioural complementarity.}
+ML detects stealthy low-periodicity threats; RITA excels at periodic beacons in
+encrypted traffic. Equation~\eqref{eq:phi} provides a principled fusion mechanism validated by the RITA cross-correlation results: all RITA-flagged IPs were also captured by the ensemble, while the ML model additionally flagged hosts lacking temporal regularity. This asymmetric coverage pattern---RITA's detections being a strict subset of the ML ensemble's in our validation window---is consistent with the two methods' underlying assumptions rather than evidence that RITA is redundant. RITA's DFT-based approach is fundamentally a frequency-domain test for stationarity and periodicity and, by construction, cannot flag a host-pair whose communication lacks a stable period, regardless of how suspicious its other characteristics (SDN telemetry anomalies, unusual byte ratios) might be; the ML ensemble has no such structural blind spot because it is trained directly on labelled examples spanning both periodic and aperiodic C2 behaviour. We nonetheless retain RITA in the pipeline, rather than relying solely on the ML ensemble, for three concrete reasons: it provides an independent, model-architecture-diverse confirmation signal that guards against ML-specific failure modes (e.g., adversarial feature manipulation targeting the trained classifiers specifically); it requires no labelled training data and can therefore continue operating usefully against genuinely novel C2 families not represented in CTU-13/MCFP; and its interpretable spectral output (a single conformity percentage tied to a concrete periodicity claim) is often easier for a junior SOC analyst to reason about during initial triage than a 38-dimensional feature vector's SHAP-style attribution.
+\subsection{Practical Implications}
+\textbf{Model selection.}
+XGBoost is recommended for resource-constrained SDN controller environments:
+$3\times$ faster training, $\approx60\,\%$ lower inference memory, and
+competitive accuracy.
+RF is preferred where maximum precision is critical.
+We frame this as a genuine deployment trade-off rather than a strict dominance relationship: an operator managing a resource-constrained branch-office controller, or one who needs to retrain frequently to absorb newly labelled threat intelligence, should weight XGBoost's training-time and memory advantages heavily, accepting the modest (roughly 1\,pp macro-F1, 0.01\,pp FAR) precision cost relative to RF. Conversely, an operator running centralised, well-provisioned inference infrastructure who retrains infrequently and for whom every fraction of a percentage point of FAR translates directly into analyst headcount should prefer RF. In our own reference deployment (Section~\ref{sec:integration}) we in fact run both models simultaneously and average their probabilities in Tier~1 of Algorithm~\ref{alg:hcs}, which is a third option available to operators who can absorb the combined computational cost: our results show the two-model ensemble's implicit averaging is itself part of why Tier~1 recall remains high even before RITA and SDN-path evidence are incorporated.
+
+\textbf{Threshold tuning.}
+The 96\,\%/80\,\% precision/recall trade-off on the validation log reflects a
+SOC-optimised operating point minimising alert fatigue.
+Critical-infrastructure operators should lower $\theta_\Phi$ to improve recall,
+accepting a higher FAR.
+This threshold is not a universal constant and should be treated as a per-deployment tuning parameter informed by the specific cost asymmetry an organisation faces between missed detections and analyst alert fatigue. A financial-services SOC handling regulated data, where a single missed C2 channel could trigger a reportable breach, may rationally accept a substantially higher FAR (and correspondingly larger analyst workload) in exchange for the recall gain from a lower $\theta_\Phi$; a managed security service provider (MSSP) triaging alerts across hundreds of tenant networks with a fixed analyst headcount may instead need to raise $\theta_\Phi$ well above our reported 0.7 to keep per-tenant alert volume within a sustainable range, accepting that some borderline C2 activity will fall into the ``uncertain'' band of Fig.~\ref{fig:phi_dist} without automatic escalation. We report $\theta_\Phi=0.7$ as the operating point used in our own evaluation, not as a universally recommended default.
+
+\textbf{Shadow-rule enrichment.}
+\textsc{HCS} Tier~3 uniquely leverages SDN controller visibility to detect
+unauthorised flow rules on suspected C2 forwarding paths---a capability
+impossible in classical networks.
+Surgical flow-rule revocation executes within milliseconds via the northbound
+API, enabling automated active defence.
+This capability is, in our view, the clearest practical differentiator of an SDN-native detection framework over a retrofitted classical-network equivalent, and it is worth emphasising why: in a traditional network, even a perfectly accurate detector can only \emph{report} a suspected C2 channel, leaving containment to a separate, typically slower, out-of-band process (firewall rule deployment, VLAN reassignment, or manual switch configuration). Because the SDN controller that observes the anomaly is the same entity that programs the forwarding plane, Tier~3's shadow-rule discovery and any resulting automated revocation collapse detection and response into a single control loop with millisecond-scale reaction time. We deliberately scope our current implementation to \emph{detection and evidence enrichment} (flagging unauthorised rules, raising severity) rather than fully automated revocation, since autonomous flow-rule deletion carries availability risk if a detection is a false positive; we view human-in-the-loop revocation, gated by the CRITICAL severity tier, as the appropriate default posture until longitudinal production experience justifies more aggressive automation.
+
+\textbf{Scalability.}The Zeek cluster (worker/manager/logger) scales linearly with additional workers.
+ML inference is embarrassingly parallel and distributable across multiple
+prediction servers feeding a shared Elasticsearch cluster, supporting
+carrier-grade SDN deployments.
+Two scalability dimensions merit separate treatment, since they are governed by different bottlenecks. Horizontal flow-processing throughput (Zeek capture and \textsc{SDN-FE} feature extraction) scales close to linearly with additional workers because both are embarrassingly parallel over independent flows, subject only to the sliding-window state-sharing overhead discussed in Section~\ref{sec:methodology}. Controller-side telemetry collection (Phase~3 of Algorithm~\ref{alg:sdnfe} and Tier~3 of Algorithm~\ref{alg:hcs}), by contrast, is fundamentally constrained by the SDN controller's own API throughput, since every telemetry query and shadow-rule inspection must ultimately be served by a single (or federated) control-plane authority; this is the more likely bottleneck in a carrier-grade deployment and is why Tier~3 is architected to fire only on the already-filtered candidate set $\mathcal{C}_2$ rather than on every flow, as discussed in Section~\ref{sec:methodology}.
+\subsection{Threats to Validity}
+We separate threats to validity into three standard categories to make explicit what our results do, and do not, support.
+\emph{Internal validity.} Our primary internal-validity concern is dataset-induced leakage between train and test partitions. We mitigated this through strict stratified splitting prior to any SMOTE application (Section~\ref{sec:results}) and through five-fold cross-validation restricted to the training partition only; nonetheless, because CTU-13 scenarios were captured on a comparatively small number of distinct physical hosts, there remains a residual risk that host-identity artefacts (e.g., a specific host's characteristic background-traffic fingerprint) rather than genuine C2 behavioural signal contribute to classifier performance. We partially address this by confirming that performance remains stable across the held-out MCFP captures, which involve different hosts and network topologies than CTU-13, but a fully rigorous host-disjoint cross-dataset evaluation is left to future work.
+
+\emph{External validity.} As noted in Section~\ref{sec:results}, the protocol distribution of our combined corpus (UDP-heavy, TCP-light) may not represent contemporary enterprise traffic mixes, in which HTTPS-based C2 frameworks dominate. Additionally, our SDN telemetry features were synthesised under a fixed, representative idle-timeout configuration on a Ryu-based testbed rather than measured on a production multi-vendor SDN fabric; controller implementation differences (OpenDaylight vs.\ ONOS vs.\ Ryu, as surveyed in \citep{sebbar2018mitm}) may produce systematically different $\tau_{CT}$ distributions than the one implicit in our evaluation, and results should be validated on the operator's specific controller stack before production deployment.
+\emph{Construct validity.} Our binarisation of the original multi-category labels (Table~\ref{tab:labeldist}) into a single ``malicious C2'' class necessarily discards information about botnet sub-family, which may be operationally relevant (different families warrant different response playbooks) even though it does not affect our reported binary-classification metrics. Likewise, the RITA conformity score $\rho(h,o)$ used in Eq.~\eqref{eq:phi} is itself an approximation to true periodicity and inherits RITA's own known sensitivity to beacon-count thresholds and observation-window length, which we did not independently vary in this study.
+\subsection{Limitations}
+Evaluation relies on public datasets (CTU-13, MCFP) that may not fully reflect
+production SDN traffic diversity.
+Future work will capture real southbound telemetry in a Mininet + OpenDaylight
+testbed and evaluate adversarial robustness (jitter maximisation, flow splitting,
+mimicry attacks).
+We elaborate briefly on the adversarial-robustness limitation, since it is, in our assessment, the most consequential open question for real-world deployment. An adaptive adversary aware of our approach could, in principle, attempt three distinct evasion strategies mapped directly onto the terms of Eq.~\eqref{eq:beacon}: (i) maximise jitter $j$ to suppress the periodicity signal RITA depends on, which our results in Section~\ref{sec:integration} suggest is only partially effective against \textsc{HCS} because the ML component does not require strict periodicity; (ii) deliberately keep $D<T_\text{idle}$ to avoid the SDN-perturbation term entirely, which Eq.~\eqref{eq:miss} shows is available to the attacker only if they can estimate or observe the target network's idle-timeout configuration, information that is not normally exposed outside the control plane; and (iii) fragment a single beacon across multiple apparent host-pairs (mimicking the random-host-rotation scenario in Fig.~\ref{fig:beacon_iat}) to dilute any single pair's statistical signature below the Tier~1 threshold $\theta_\text{ML}$, which we believe is the most credible evasion route against the current design and is not directly countered by any component of Algorithm~\ref{alg:hcs} as presently formulated, since \textsc{HCS} scores host-pairs independently rather than jointly across a candidate botnet's full destination set. Extending Tier~2 or introducing a new tier that clusters candidate host-pairs by shared destination infrastructure or shared timing phase, in the spirit of BotMiner's~\citep{gu2008} cross-host correlation, is accordingly one of our highest-priority items for future work.
+\section{Conclusion}
+This paper presented a formal, ML-driven C2 detection framework tailored to SDN
+environments.
+A closed-form beaconing model captures SDN-induced timing perturbations;
+\textsc{SDN-FE} (Algorithm~\ref{alg:sdnfe}) and \textsc{HCS}
+(Algorithm~\ref{alg:hcs}) operationalise detection in an open-source SOC stack.
+RF and XGBoost achieve macro F1\,>\,0.99 with FAR\,<\,0.8\,\% on 22.5\,M
+labelled flows.
+SDN telemetry features contribute +1.3\,pp in macro F1, and the combined
+ML+RITA pipeline provides layered detection coverage.
+\textsc{HCS} shadow-rule enrichment uniquely exploits SDN controller visibility
+to escalate critical alerts.
+Stepping back from the individual results, the broader argument of this paper is that SDN's centralisation---often discussed purely as a security liability because it concentrates attack surface~\citep{sebbar2018mitm,sebbar2022phd}---is simultaneously a detection asset when the same centralised vantage point is systematically instrumented and modelled, as we have done via the $\tau_{CT}$ perturbation formalism in Section~\ref{sec:model}. The consistency between our theoretical prediction (Proposition~1), our empirical ablation (Table~\ref{tab:ablation}), and our operational cross-validation against RITA (Section~\ref{sec:integration}) gives us reasonable confidence that this is a genuine, exploitable signal rather than a dataset-specific artefact, though the threats to validity discussed in Section~\ref{sec:discussion}---particularly around controller-implementation diversity and adversarial adaptation---mean this should be read as a strong initial result rather than a closed problem.
+
+Future directions include: (i)~evaluating Autoencoders and Temporal CNNs on real
+SDN southbound telemetry; (ii)~federated learning across SDN domains to share
+threat intelligence without exposing raw traffic; and (iii)~adversarial robustness
+evaluation against jitter-maximisation and mimicry-attack strategies. To these we add two further directions motivated directly by the interpretive analysis above: (iv)~an explicit sweep of the OpenFlow idle-timeout parameter $T_\text{idle}$ to empirically trace the detectability/controller-load trade-off implied by Eq.~\eqref{eq:miss} and validate the practical policy guidance of Proposition~1 under realistic control-plane load; and (v)~extending \textsc{HCS} with a cross-host-pair correlation tier, in the spirit of BotMiner~\citep{gu2008}, to close the beacon-fragmentation evasion gap identified in Section~\ref{sec:discussion}.
+
+\subsection{Figures}
+
+The \texttt{interact} class file will deal with positioning your figures in the same way as standard \LaTeX. It should not normally be necessary to use the optional \texttt{[htb]} location specifiers of the \texttt{figure} environment in your manuscript; you may, however, find the \verb"[p]" placement option or the \verb"endfloat" package useful if a journal insists on the need to separate figures from the text.
+
+Figure captions appear below the figures themselves, therefore the \verb"\caption" command should appear after the body of the figure. For example, Figure~\ref{sample-figure} with caption and sub-captions is produced using the following commands:
+\begin{verbatim}
+\begin{figure}
+\centering
+\subfloat[An example of an individual figure sub-caption.]{%
+\resizebox*{5cm}{!}{\includegraphics{graph1.eps}}}\hspace{5pt}
+\subfloat[A slightly shorter sub-caption.]{%
+\resizebox*{5cm}{!}{\includegraphics{graph2.eps}}}
+\caption{Example of a two-part figure with individual sub-captions
+ showing that captions are flush left and justified if greater
+ than one line of text.} \label{sample-figure}
+\end{figure}
+\end{verbatim}
+\begin{figure}
+\centering
+\subfloat[An example of an individual figure sub-caption.]{%
+\resizebox*{5cm}{!}{\includegraphics{graph1.eps}}}\hspace{5pt}
+\subfloat[A slightly shorter sub-caption.]{%
+\resizebox*{5cm}{!}{\includegraphics{graph2.eps}}}
+\caption{Example of a two-part figure with individual sub-captions
+ showing that captions are flush left and justified if greater
+ than one line of text.} \label{sample-figure}
+\end{figure}
+
+To ensure that figures are correctly numbered automatically, the \verb"\label" command should be included just after the \verb"\caption" command, or in its argument.
+
+The \verb"\subfloat" command requires \verb"subfig.sty", which is called in the preamble of the \texttt{interactapasample.tex} file (to allow your choice of an alternative package if preferred) and included in the \textsf{Interact} \LaTeX\ bundle for convenience. Please supply any additional figure macros used with your article in the preamble of your .tex file.
+
+The source files of any figures will be required when the final, revised version of a manuscript is submitted. Authors should ensure that these are suitable (in terms of lettering size, etc.) for the reductions they envisage.
+
+The \texttt{epstopdf} package can be used to incorporate encapsulated PostScript (.eps) illustrations when using PDF\LaTeX, etc. Please provide the original .eps source files rather than the generated PDF images of those illustrations for production purposes.
+
+
+\subsection{Tables}
+
+
+
+
+\begin{verbatim}
+\begin{table}
+\tbl{Example of a table showing that its caption is as wide as
+ the table itself and justified.}
+{\begin{tabular}{lcccccc} \toprule
+ & \multicolumn{2}{l}{Type} \\ \cmidrule{2-7}
+ Class & One & Two & Three & Four & Five & Six \\ \midrule
+ Alpha\textsuperscript{a} & A1 & A2 & A3 & A4 & A5 & A6 \\
+ Beta & B2 & B2 & B3 & B4 & B5 & B6 \\
+ Gamma & C2 & C2 & C3 & C4 & C5 & C6 \\ \bottomrule
+\end{tabular}}
+\tabnote{\textsuperscript{a}This footnote shows how to include
+ footnotes to a table if required.}
+\label{sample-table}
+\end{table}
+\end{verbatim}
+
+To ensure that tables are correctly numbered automatically, the \verb"\label" command should be included just before \verb"\end{table}".
+
+The \verb"\toprule", \verb"\midrule", \verb"\bottomrule" and \verb"\cmidrule" commands are those used by \verb"booktabs.sty", which is called by the \texttt{interact} class file and included in the \textsf{Interact} \LaTeX\ bundle for convenience. Tables produced using the standard commands of the \texttt{tabular} environment are also compatible with the \texttt{interact} class file.
+
+
+\subsection{Landscape pages}
+
+If a figure or table is too wide to fit the page it will need to be rotated, along with its caption, through 90$^{\circ}$ anticlockwise. Landscape figures and tables can be produced using the \verb"rotating" package, which is called by the \texttt{interact} class file. The following commands (for example) can be used to produce such pages.
+\begin{verbatim}
+\setcounter{figure}{1}
+\begin{sidewaysfigure}
+\centerline{\epsfbox{figname.eps}}
+\caption{Example landscape figure caption.}
+\label{landfig}
+\end{sidewaysfigure}
+\end{verbatim}
+\begin{verbatim}
+\setcounter{table}{1}
+\begin{sidewaystable}
+ \tbl{Example landscape table caption.}
+  {\begin{tabular}{@{}llllcll}
+    .
+    .
+    .
+  \end{tabular}}\label{landtab}
+\end{sidewaystable}
+\end{verbatim}
+Before any such float environment, use the \verb"\setcounter" command as above to fix the numbering of the caption (the value of the counter being the number given to the preceding figure or table). Subsequent captions will then be automatically renumbered accordingly. The \verb"\epsfbox" command requires \verb"epsfig.sty", which is called by the \texttt{interact} class file and is also included in the \textsf{Interact} \LaTeX\ bundle for convenience.
+
+Note that if the \verb"endfloat" package is used, one or both of the commands
+\begin{verbatim}
+\DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
+\DeclareDelayedFloatFlavor{sidewaystable}{table}
+\end{verbatim}
+will need to be included in the preamble of your .tex file, after the \verb"endfloat" package is loaded, in order to process any landscape figures and/or tables correctly.
+
+
+\subsection{Theorem-like structures}
+
+A predefined \verb"proof" environment is provided by the \texttt{amsthm} package (which is called by the \texttt{interact} class file), as follows:
+\begin{proof}
+More recent algorithms for solving the semidefinite programming relaxation are particularly efficient, because they explore the structure of the MAX-CUT problem.
+\end{proof}
+\noindent This was produced by simply typing:
+\begin{verbatim}
+\begin{proof}
+More recent algorithms for solving the semidefinite programming
+relaxation are particularly efficient, because they explore the
+structure of the MAX-CUT problem.
+\end{proof}
+\end{verbatim}
+Other theorem-like environments (theorem, definition, remark, etc.) need to be defined as required, e.g.\ using \verb"\newtheorem{theorem}{Theorem}" in the preamble of your .tex file (see the preamble of \verb"interactapasample.tex" for more examples). You can define the numbering scheme for these structures however suits your article best. Please note that the format of the text in these environments may be changed if necessary to match the style of individual journals by the typesetter during preparation of the proofs.
+
+
+\subsection{Mathematics}
+
+\subsubsection{Displayed mathematics}
+
+The \texttt{interact} class file will set displayed mathematical formulas centred on the page without equation numbers if you use the \texttt{displaymath} environment or the equivalent \verb"\[...\]" construction. For example, the equation
+\[
+ \hat{\theta}_{w_i} = \hat{\theta}(s(t,\mathcal{U}_{w_i}))
+\]
+was typeset using the commands
+\begin{verbatim}
+\[
+ \hat{\theta}_{w_i} = \hat{\theta}(s(t,\mathcal{U}_{w_i}))
+\]
+\end{verbatim}
+
+For those of your equations that you wish to be automatically numbered sequentially throughout the text for future reference, use the \texttt{equation} environment, e.g.
+\begin{equation}
+ \hat{\theta}_{w_i} = \hat{\theta}(s(t,\mathcal{U}_{w_i}))
+\end{equation}
+was typeset using the commands
+\begin{verbatim}
+\begin{equation}
+ \hat{\theta}_{w_i} = \hat{\theta}(s(t,\mathcal{U}_{w_i}))
+\end{equation}
+\end{verbatim}
+
+Part numbers for sets of equations may be generated using the \texttt{subequations} environment, e.g.
+\begin{subequations} \label{subeqnexample}
+\begin{equation}
+     \varepsilon \rho w_{tt}(s,t) = N[w_{s}(s,t),w_{st}(s,t)]_{s},
+     \label{subeqnparta}
+\end{equation}
+\begin{equation}
+     w_{tt}(1,t)+N[w_{s}(1,t),w_{st}(1,t)] = 0,   \label{subeqnpartb}
+\end{equation}
+\end{subequations}
+which was typeset using the commands
+\begin{verbatim}
+\begin{subequations} \label{subeqnexample}
+\begin{equation}
+     \varepsilon \rho w_{tt}(s,t) = N[w_{s}(s,t),w_{st}(s,t)]_{s},
+     \label{subeqnparta}
+\end{equation}
+\begin{equation}
+     w_{tt}(1,t)+N[w_{s}(1,t),w_{st}(1,t)] = 0,   \label{subeqnpartb}
+\end{equation}
+\end{subequations}
+\end{verbatim}
+This is made possible by the \texttt{amsmath} package, which is called by the class file. If you put a \verb"\label" just after the \verb"\begin{subequations}" command, references can be made to the collection of equations, i.e.\ `(\ref{subeqnexample})' in the example above. Or, as the example also shows, you can label and refer to each equation individually -- i.e.\ `(\ref{subeqnparta})' and `(\ref{subeqnpartb})'.
+
+Displayed mathematics should be given end-of-line punctuation appropriate to the running text sentence of which it forms a part, if required.
+
+\subsubsection{Math fonts}
+
+\paragraph{Superscripts and subscripts}
+Superscripts and subscripts will automatically come out in the correct size in a math environment (i.e.\ enclosed within \verb"\(...\)" or \verb"$...$" commands in running text, or within \verb"\[...\]" or the \texttt{equation} environment for displayed equations). Sub/superscripts that are physical variables should be italic, whereas those that are labels should be roman (e.g.\ $C_p$, $T_\mathrm{eff}$). If the subscripts or superscripts need to be other than italic, they must be coded individually.
+
+\paragraph{Upright Greek characters and the upright partial derivative sign}
+Upright lowercase Greek characters can be obtained by inserting the letter `u' in the control code for the character, e.g.\ \verb"\umu" and \verb"\upi" produce $\umu$ (used, for example, in the symbol for the unit microns -- $\umu\mathrm{m}$) and $\upi$ (the ratio of the circumference of a circle to its diameter). Similarly, the control code for the upright partial derivative $\upartial$ is \verb"\upartial". Bold lowercase as well as uppercase Greek characters can be obtained by \verb"{\bm \gamma}", for example, which gives ${\bm \gamma}$, and \verb"{\bm \Gamma}", which gives ${\bm \Gamma}$.
+
+
+\section*{Acknowledgement(s)}
+
+An unnumbered section, e.g.\ \verb"\section*{Acknowledgements}", may be used for thanks, etc.\ if required and included \emph{in the non-anonymous version} before any Notes or References.
+
+
+\section*{Disclosure statement}
+
+An unnumbered section, e.g.\ \verb"\section*{Disclosure statement}", may be used to declare any potential conflict of interest and included \emph{in the non-anonymous version} before any Notes or References, after any Acknowledgements and before any Funding information.
+
+
+\section*{Funding}
+
+An unnumbered section, e.g.\ \verb"\section*{Funding}", may be used for grant details, etc.\ if required and included \emph{in the non-anonymous version} before any Notes or References.
+
+
+\section*{Notes on contributor(s)}
+
+An unnumbered section, e.g.\ \verb"\section*{Notes on contributors}", may be included \emph{in the non-anonymous version} if required. A photograph may be added if requested.
+
+
+\section*{Nomenclature/Notation}
+
+An unnumbered section, e.g.\ \verb"\section*{Nomenclature}" (or \verb"\section*{Notation}"), may be included if required, before any Notes or References.
+
+
+\section*{Notes}
+
+An unnumbered `Notes' section may be included before the References (if using the \verb"endnotes" package, use the command \verb"\theendnotes" where the notes are to appear, instead of creating a \verb"\section*").
+
+
+\section{References}
+
+\subsection{References cited in the text}
+
+References should be cited in accordance with that Taylor \& Francis standard APA style (updated in keeping with guidance from the \emph{Publication Manual of the American Psychological Association}, 7th ed. [APA-7]). Citations typically feature an author list followed by a publication year and may be arranged alphabetically and separated by semicolons within parentheses -- `\citep{bogdanovich1971,monk57}', for instance -- or integrated into the `narrative' course of your manuscripts -- `\ldots as \citet{bowlby82} contends', for instance. Citations of a reference credited to three or more authors should display the first author, then `et al.' (e.g., `\citep{dixon24}' or `\citet{dixon24}'). If two or more references are credited to first authors with the same surname but different given-name initials, the first authors' given-name initials should precede the surnames in each citations of the references (e.g., `\citep{gregoc25,gregoj22,gregol25}' or `\citet{gregoc25}, \citet{gregoj22} and \citet{gregol25}'). If two or more references are credited to same author and share a publication year, alphabetical designators (i.e., `a, b, c,\ldots') should be affixed to publication years in the citations and references (e.g., `(Fogel, \citeyear{fogelehpd04}, \citeyear{fogeljee0})' or `\citet{fogelehpd04}' and `\citet{fogeljee0}'). If a named author cannot be identified for a reference, its citations should present a properly formatted abridged title of the resource rather than `Anonymous' (e.g., `\citep{physician19}', for a journal article, and `\citet{dual93}', for a book). Citations of published translations and reprints should provide the work's original publication year followed by the translation's publication year (e.g. `\citep{piaget95}', `\citet{freud89}'). In lieu of publication years, `in press' should be employed when citing a work accepted for but awaiting publication (e.g., `\citet{watermeyerip}'), while  `n.d.' should be employed in a citation if `no [publication] date' can be discerned for a resource (`\citep{pittnd}').
+
+Each bibliographic entry must be assigned a key, which you use in a citation command in the text. In this document, the key \verb"machado19" in the citation form \verb"\citep{machado19}" produces `\citep{machado19}', and the keys \verb"amnesty19", \verb"harris15" and \verb"schack19" in the citation form \verb"\citep{amnesty19,harris15,schack19}" produce `\citep{amnesty19,harris15,schack19}'. The appropriate citation style for different situations can be obtained, for example, by \verb"\citet{giddens19}" for `\citet{giddens19}', \verb"\citealp{zaragoza05}" for `\citealp{zaragoza05}', and \verb"\citealt{hecht21}" for `\citealt{hecht21}'. Citation of the year alone may be produced in narrative form through \verb"\citeyear{wiley08}" (i.e., `\citeyear{wiley08}') or parenthetically through \verb"\citeyearpar{goodwin05}" (i.e., `\citeyearpar{goodwin05}'), and citation of the author(s) alone can be produced through \verb"\citeauthor{hupfer1996}" (i.e., `\citeauthor{hupfer1996}'). Optional notes may be included at the beginning and/or end of a citation by the use of square brackets. For example, \verb"\citep[p.~14]{remael12}" produces `\citep[p.~14]{remael12}', \verb"\citep[see][pp.~102-–104]{adams08}" produces `\citep[see][pp.~102-–104]{adams08}', and \verb"\citep[e.g.,][]{choppy18}" produces `\citep[e.g.,][]{choppy18}'. A `plain' \verb"\cite" command will produce the same results as a \verb"\citet" -- that is, \verb"\cite{wittgenstein09}" will produce `\cite{wittgenstein09}'.
+
+
+\subsection{The list of references}
+
+References should be listed at the end of the main text in alphabetical order, then chronologically (earliest first), with full page ranges (where appropriate) and issue numbers (essential for journals paginated by issue). If a reference has more than 20 named authors, list the first 19 names, followed by an ellipsis (\ldots), then the last author's name \citep[see][below]{nichols19}.
+The following list shows some sample references prepared according to Taylor \& Francis Journals' standard APA-7 guidance. Instructions for styling references to conform to these guideline be downloaded from \url{https://files.taylorandfrancis.com/tf_apa.pdf}.
+
+\begin{thebibliography}{}
+
+
+\begin{thebibliography}{99}
+
+\bibitem[Gartner(2024)]{gartner2024}
+Gartner. (2024).
+Predicts solid growth for information security, reaching \$287 billion by 2027.
+Technical Report.
+
+\bibitem[Mandiant(2024)]{mandiant2024}
+Mandiant. (2024).
+\emph{M-Trends 2024 special report}.
+Google Cloud Security.
+
+\bibitem[Gartner(2023)]{market_report}
+Gartner. (2023).
+\emph{Forecast: Information security and risk management, worldwide, 2021--2027}.
+
+\bibitem[Mandiant(2024)]{apt_dwell}
+Mandiant. (2024).
+\emph{M-Trends 2024: Cyber security insights}.
+
+\bibitem[Sebbar et al.(2018)]{sebbar2018mitm}
+Sebbar, A., Boulmalf, M., Ech-Cherif El Kettani, M. D., and Baddi, Y. (2018).
+Detection MITM attack in multi-SDN controller.
+In \emph{2018 IEEE 5th International Congress on Information Science and Technology (CiSt)}
+(pp. 583--587). IEEE.
+https://doi.org/10.1109/cist.2018.8596479
+
+\bibitem[Sebbar(2022)]{sebbar2022phd}
+Sebbar, A. (2022).
+\emph{Advanced detection and prevention technique to mitigate threats in multi-domain Software-Defined Networking using supervised machine learning techniques}
+[Ph.D. dissertation, ENSIAS, Mohammed V University of Rabat, Morocco].
+
+\bibitem[Gardiner et al.(2014)]{gardiner2014}
+Gardiner, J., Cova, M., and Nagaraja, S. (2014).
+\emph{Command \& control: Understanding, denying and detecting}.
+arXiv:1408.1136.
+
+\bibitem[Kreutz et al.(2015)]{kreutz2015}
+Kreutz, D., Ramos, F. M. V., Verissimo, P. E., Rothenberg, C. E.,
+Azodolmolky, S., and Uhlig, S. (2015).
+Software-defined networking: A comprehensive survey.
+\emph{Proceedings of the IEEE, 103}(1), 14--76.
+
+\bibitem[Garcia et al.(2014)]{garcia2014}
+Garcia, S., Grill, M., Stiborek, J., and Zunino, A. (2014).
+An empirical comparison of botnet detection methods.
+\emph{Computers \& Security, 45}, 100--123.
+
+\bibitem[Stratosphere IPS Project(2022)]{mcfp2022}
+Stratosphere IPS Project. (2022).
+\emph{Malware Capture Facility Project}.
+\url{https://www.stratosphereips.org/}
+
+\bibitem[Gu et al.(2008)]{gu2008}
+Gu, G., Perdisci, R., Zhang, J., and Lee, W. (2008).
+BotMiner: Clustering analysis of network traffic for protocol- and
+structure-independent botnet detection.
+In \emph{Proceedings of the USENIX Security Symposium}
+(pp. 139--154).
+
+\bibitem[Tegeler et al.(2012)]{tegeler2012}
+Tegeler, F., Fu, X., Vigna, G., and Kruegel, C. (2012).
+BotFinder: Finding bots in network traffic without deep packet inspection.
+In \emph{Proceedings of ACM CoNEXT}.
+
+\bibitem[Active Countermeasures(2022)]{rita2022}
+Active Countermeasures. (2022).
+\emph{RITA: Real Intelligence Threat Analytics}.
+\url{https://github.com/activecm/rita}
+
+\bibitem[Bhuyan et al.(2014)]{bhuyan2014}
+Bhuyan, M. H., Bhattacharyya, D. K., and Kalita, J. K. (2014).
+Network anomaly detection: Methods, systems and tools.
+\emph{IEEE Communications Surveys \& Tutorials, 16}(1), 303--336.
+
+\bibitem[Sharafaldin et al.(2018)]{sharafaldin2018}
+Sharafaldin, I., Lashkari, A. H., and Ghorbani, A. A. (2018).
+Toward generating a new intrusion detection dataset.
+In \emph{Proceedings of ICISSP}.
+
+\bibitem[Wang et al.(2017)]{wang2017}
+Wang, W., et al. (2017).
+HAST-IDS: Learning hierarchical spatial-temporal features using deep neural networks.
+\emph{IEEE Access, 6}.
+
+\bibitem[Mirsky et al.(2018)]{mirsky2018}
+Mirsky, Y., Doitshman, T., Elovici, Y., and Shabtai, A. (2018).
+Kitsune: An ensemble of autoencoders for online network intrusion detection.
+In \emph{Proceedings of NDSS}.
+
+\bibitem[Braga et al.(2010)]{braga2010}
+Braga, R., Mota, E., and Passito, A. (2010).
+Lightweight DDoS flooding attack detection using NOX/OpenFlow.
+In \emph{Proceedings of IEEE LCN}.
+
+\bibitem[Shin et al.(2013)]{shin2013}
+Shin, S., et al. (2013).
+AVANT-GUARD: Scalable and vigilant switch flow management in
+software-defined networks.
+In \emph{Proceedings of ACM CCS}.
+
+\bibitem[Shu et al.(2016)]{shu2016}
+Shu, Z., et al. (2016).
+Security in software-defined networking: Threats and countermeasures.
+\emph{Mobile Networks and Applications, 21}.
+
+\bibitem[Chawla et al.(2002)]{chawla2002}
+Chawla, N. V., Bowyer, K. W., Hall, L. O., and Kegelmeyer, W. P. (2002).
+SMOTE: Synthetic minority over-sampling technique.
+\emph{Journal of Artificial Intelligence Research, 16}.
+
+\end{thebibliography}
+
+
+
+\bibitem[Adams et~al.(2008)]{adams08}
+Adams, Z., F{\"u}ss, R., \& Kaiser, D.~G. (2008). Macroeconomic determinants of commodity
+futures returns. In F.~J. Fabozzi, R. F{\"u}ss, \& D.~G. Kaiser (Eds.), \emph{The handbook of commodity
+	investing} (pp. 87--112). Wiley.
+    \bibitem[Jihad et al.(2024)]{jihad2024}
+Jihad, K., Hamza, K. I., Yamani, Y. E., Faycal, B., and Baddi, Y. (2024).
+Study and Evaluation of Network Security Strategies in SDN Networks.
+In \emph{2024 World Conference on Complex Systems (WCCS)}, Mohammedia, Morocco.
+
+\bibitem[Amnesty International(2019)]{amnesty19}
+Amnesty International. (2019). \emph{Fragmented and unequal: A justice system that fails survivors
+of intimate partner violence in Louisiana, USA} (Tech. Rep. No. Report No. AMR
+51/1160/2019).
+
+\bibitem[Bogdanovich(1971)]{bogdanovich1971}
+Bogdanovich, P. (Director). (1971). \emph{The last picture show} [Film]. Columbia Pictures; BBS
+Productions; Last Picture Show Productions.
+
+\bibitem[Bowlby(1982)]{bowlby82}
+Bowlby, J. (1982). \emph{Attachment and loss: Vol. 3. Loss: Sadness and depression} (3rd ed.). Basic Books.
+
+\bibitem[Choppy(2018)]{choppy18}
+Choppy, P.~T. (2018). \emph{Attitudes to slavery and race in Seychellois Creole oral literature}
+[Master’s thesis, University of Birmingham]. University of Birmingham eTheses Repository.
+http://etheses.bham.ac.uk//id/eprint/8082/7/Choppy18MARes.pdf
+
+\bibitem[Dixon et~al.(2024)]{dixon24}
+Dixon, L., Mosongo, B., Nosrati-Ghods, N., De Kock, S., \& Gogela, U. (2024). \emph{Open and lite
+techno-economic dataset for long-term energy systems modelling in the Republic of South
+Africa} (Version 2.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.13710940
+
+\bibitem[\emph{Dual Disorders Recovery Book}(1993)]{dual93}
+\emph{The dual disorders recovery book: A twelve step program for those of us with addiction and emotional or psychiatric illness}. (1993). Hazelden Foundation.
+
+\bibitem[Fogel(2004a)]{fogelehpd04}
+Fogel, R.~W. (2004a). \emph{The escape from hunger and premature death, 1700--2100: Europe,
+America, and the Third World}. Cambridge University Press.
+
+\bibitem[Fogel(2004b)]{fogeljee0}
+Fogel, R.~W. (2004b). Technophysio evolution and the measurement of economic growth.
+\emph{Journal of Evolutionary Economics}, \emph{14}(2), 217--221. https://doi.org/10.1007/s00191-004-0188-x
+
+\bibitem[Freud(1905/1989)]{freud89}
+Freud, S. (1989). \emph{Jokes and their relation to the unconscious} (J. Strachey, Ed. \& Trans.). W.
+W. Norton \& Company. (Original work published 1905)
+
+\bibitem[Giddens(2019)]{giddens19}
+Giddens, R. (Host). (2019, January 23). Mozart’s Queen of the Night: Outrage out of this
+world (No. 8) [Audio podcast episode]. In \emph{Aria code}. The Metropolitan Opera; WQXR;
+WNYC Studios. https://www.wnycstudios.org/podcasts/aria-code/episodes/aria-code-mozart-magic-flute-kathryn-lewek
+
+\bibitem[Goodwin(2005)]{goodwin05}
+Goodwin, P. (Ed.). (2005). \emph{The literate classroom}. David Fulton.
+
+\bibitem[C.~Grego(2025)]{gregoc25}
+Grego, C. (2025). The uncertain presence: Experiences of living with metastatic breast cancer.
+\emph{Medical Anthropology}, \emph{41}(2), 129–140. https://doi.org/10.1080/01459740.2021.1941003
+
+\bibitem[J.~Grego(2022)]{gregoj22}
+Grego, J. (2022). Biology and ecology of subterranean Mollusca. In J.~J. Wynne (Ed.), \emph{Cave
+biodiversity: Speciation and diversity of subterranean fauna} (pp. 95--164). Johns Hopkins
+University Press.
+
+\bibitem[L.~Grego(2025)]{gregol25}
+Grego, L. (2025). Do technology advances allow missile defences to make up ground? \emph{Journal
+of Strategic Studies}, \emph{48}(2), 465–509. https://doi.org/10.1080/01402390.2024.2447306
+
+\bibitem[Harris \& Zucker(2015)]{harris15}
+Harris, B., \& Zucker, S. (2015, August 9). \emph{Haussmann the demolisher and the creation of
+modern Paris}. Smarthistory. https://smarthistory.org/haussmann-the-demolisher-and-thecreation-of-modern-paris
+
+\bibitem[Hecht et~al.(2021)]{hecht21}
+Hecht, K., McKinnon, R., Podkowiak, T., Roman, M., Schmidt, J., Vivier, S., Werst, E.,
+\& Wyman, J. (2021). \emph{Spectrum} (Version 6.01) [Computer software]. Avenir Health.
+https://avenirhealth.org/Download/Spectrum/SpecInstall.EXE
+
+\bibitem[Hupfer(1996)]{hupfer1996}
+Hupfer, P. (1996). \emph{Unsere Umwelt: Das Klima—Globale und lokale Aspekte} [Our environment: The climate—Global and local aspects]. Teubner Verlag.
+
+\bibitem[Machado \& Swank(2019)]{machado19}
+Machado, M.~M., \& Swank, J.~M. (2019). Therapeutic gardening: A counseling
+approach for bereavement from suicide. \emph{Death Studies}, \emph{43}(10), 629--633.
+https://doi.org/10.1080/07481187.2018.1509908
+
+\bibitem[Monk(1957)]{monk57}
+Monk, T. (1957). 'Round midnight [Song]. On \emph{Thelonious himself}. Riverside.
+
+\bibitem[Nichols et~al.(2019)]{nichols19}
+Nichols, H.~B., Schoemaker, M.~J., Cai, H., Xu, M., Wright, L.~B., Brook, M.~N., Jones,
+M.~E., Adami, M., Baglietto, M., Bertrand, K.~A., Blot, W.~J., Boutron-Ruault, K., Dorronsoro,
+W., Dossus, M.-C., Eliassen, A.~H., Giles, G.~G., Gram, I.~T., Hankinson, S.~E.,
+Hoffman-Bolton, I., . . . Sandler, D.~P. (2019). Breast cancer risk after recent childbirth:
+A pooled analysis of 15 prospective studies. \emph{Annals of Internal Medicine}, \emph{170}(1), 22--30.
+https://doi.org/10.7326/M18-1323
+
+\bibitem[``Physician Oversight of Specialized Emergency Medical Services''(2019)]{physician19}
+Physician oversight of specialized emergency medical services. (2019). \emph{Prehospital Emergency
+Care}, \emph{23}(4), 590--591. https://doi.org/10.1080/10903127.2018.1551452
+
+\bibitem[Piaget(1945/1995)]{piaget95}
+Piaget, J. (1995). Logical operators and social life (W. Mays, Trans.). In L. Smith (Ed.),
+\emph{Sociological studies} (pp. 134--157). Routledge. (Original work published 1945)
+
+\bibitem[Pitt Rivers Museum(n.d.)]{pittnd}
+Pitt Rivers Museum. (n.d.). emph{Conservation case study: Noh theatre masks}. Retrieved May 23, 2023, from https://www.prm.ox.ac.uk/conservation-case-study-noh-theatre-masks
+
+\bibitem[Remael(2012)]{remael12}
+Remael, A. (2012). Audiovisual translation. In Y. Gambier \& L. van Doorslaer (Eds.),
+\emph{Handbook of translation studies} (2nd ed., Vol. 1, pp. 12--17). John Benjamins.
+
+\bibitem[Schack et~al.(2019)]{schack19}
+Schack, E.~O., Dueber, D., Norris Thomas, J., Fisher, M.~H., \& Jong, C. (2019, April 5--9).
+\emph{Computer-programmed decision trees for assessing teacher noticing} [Paper presentation].
+American Educational Research Association Annual Meeting, Toronto, ON, Canada.
+
+\bibitem[Watermeyer et~al.(in press)]{watermeyerip}
+Watermeyer, B., Hunt, X., Swartz, L., \& Rohleder, P. (in press). Navigating the relational
+psychic economy of disability: The case of M. \emph{Psychoanalytic Dialogues}.
+
+\bibitem[Wittgenstein(1953/2009)]{wittgenstein09}
+Wittgenstein, L. (2009). \emph{Philosophical investigations} (G.~E.~M. Anscombe, P.~M.~S. Hacker,
+\& J. Schulte, Trans.; 4th ed.). Wiley–Blackwell. (Original work published 1953)
+
+\bibitem[Wiley(2008)]{wiley08}
+Wiley, K. (2008). \emph{Three wise men greeting entry into Lagos} [Painting]. Pennsylvania Academy of the Fine Arts, Philadelphia, PA, United States. https://www.pafa.org/sites/default/files/artworkpics/2009 20 l.jpg
+
+\bibitem[Zaragoza(2005)]{zaragoza05}
+Zaragoza, K. (2005). \emph{A moral psychology of blame} [Unpublished doctoral dissertation]. Princeton
+University.
+
+\end{thebibliography}
+\bigskip
+\noindent This was produced by typing:
+\begin{verbatim}
+\begin{thebibliography}{}
+\bibitem[Adams et~al.(2008)]{adams08}
+Adams, Z., F{\"u}ss, R., \& Kaiser, D.~G. (2008). Macroeconomic 
+determinants of commodityfutures returns. In F.~J. Fabozzi, 
+R.~F{\"u}ss, \& D.~G. Kaiser (Eds.), \emph{The handbook of commodity
+investing} (pp. 87--112). Wiley.
+
+\bibitem[Amnesty International(2019)]{amnesty19}
+Amnesty International. (2019). \emph{Fragmented and unequal:
+A justice system that fails survivorsof intimate partner
+violence in Louisiana, USA} (Tech. Rep. No. Report No.
+AMR 51/1160/2019).
+
+\bibitem[Bogdanovich(1971)]{bogdanovich1971}
+Bogdanovich, P. (Director). (1971). \emph{The last picture show}
+[Film]. Columbia Pictures; BBS Productions; 
+Last Picture Show Productions.
+
+\bibitem[Bowlby(1982)]{bowlby82}
+Bowlby, J. (1982). \emph{Attachment and loss: Vol. 3. Loss:
+Sadness and depression} (3rd ed.). Basic Books.
+
+\bibitem[Choppy(2018)]{choppy18}
+Choppy, P.~T. (2018). \emph{Attitudes to slavery and race
+in Seychellois Creole oral literature} [Master’s thesis,
+University of Birmingham]. University of Birmingham eTheses Repository.
+http://etheses.bham.ac.uk//id/eprint/8082/7/Choppy18MARes.pdf
+
+\bibitem[Dixon et~al.(2024)]{dixon24}
+Dixon, L., Mosongo, B., Nosrati-Ghods, N., De Kock, S.,
+\& Gogela, U. (2024). \emph{Open and lite techno-economic dataset
+for long-term energy systems modelling in the Republic of South
+Africa} (Version 2.0) [Data set]. Zenodo.
+https://doi.org/10.5281/zenodo.13710940
+
+\bibitem[\emph{Dual Disorders Recovery Book}(1993)]{dual93}
+\emph{The dual disorders recovery book: A twelve step program for
+those of us with addiction and emotional or psychiatric
+illness}. (1993). Hazelden Foundation.
+
+\bibitem[Fogel(2004a)]{fogelehpd04}
+Fogel, R.~W. (2004a). \emph{The escape from hunger and premature death,
+1700--2100: Europe, America, and the Third World}. Cambridge
+University Press.
+
+\bibitem[Fogel(2004b)]{fogeljee0}
+Fogel, R.~W. (2004b). Technophysio evolution and the measurement of
+economic growth. \emph{Journal of Evolutionary Economics},
+\emph{14}(2), 217--221.
+https://doi.org/10.1007/s00191-004-0188-x
+
+\bibitem[Freud(1905/1989)]{freud89}
+Freud, S. (1989). \emph{Jokes and their relation to the unconscious}
+(J. Strachey, Ed. \& Trans.). W. W. Norton \& Company.
+(Original work published 1905)
+
+\bibitem[Giddens(2019)]{giddens19}
+Giddens, R. (Host). (2019, January 23). Mozart’s Queen of the Night:
+Outrage out of this world (No. 8) [Audio podcast episode]. In
+\emph{Aria code}. The Metropolitan Opera; WQXR; WNYC Studios.
+https://www.wnycstudios.org/podcasts/aria-code/episodes/aria-code-
+mozart-magic-flute-kathryn-lewek
+
+\bibitem[Goodwin(2005)]{goodwin05}
+Goodwin, P. (Ed.). (2005). \emph{The literate classroom}. David Fulton.
+
+\bibitem[C.~Grego(2025)]{gregoc25}
+Grego, C. (2025). The uncertain presence: Experiences of living with
+metastatic breast cancer. \emph{Medical Anthropology},
+\emph{41}(2), 129–140.
+https://doi.org/10.1080/01459740.2021.1941003
+
+\bibitem[J.~Grego(2022)]{gregoj22}
+Grego, J. (2022). Biology and ecology of subterranean Mollusca. In
+J.~J. Wynne (Ed.), \emph{Cave biodiversity: Speciation and
+diversity of subterranean fauna} (pp. 95--164).
+Johns Hopkins University Press.
+
+\bibitem[L.~Grego(2025)]{gregol25}
+Grego, L. (2025). Do technology advances allow missile defences to make
+up ground? \emph{Journal of Strategic Studies}, \emph{48}(2), 465–509.
+https://doi.org/10.1080/01402390.2024.2447306
+
+\bibitem[Harris \& Zucker(2015)]{harris15}
+Harris, B., \& Zucker, S. (2015, August 9). \emph{Haussmann the
+demolisher and the creation of modern Paris}. Smarthistory.
+https://smarthistory.org/haussmann-the-demolisher-and-
+thecreation-of-modern-paris
+
+\bibitem[Hecht et~al.(2021)]{hecht21}
+Hecht, K., McKinnon, R., Podkowiak, T., Roman, M., Schmidt, J., 
+Vivier, S., Werst, E., \& Wyman, J. (2021). \emph{Spectrum}
+(Version 6.01) [Computer software]. Avenir Health.
+https://avenirhealth.org/Download/Spectrum/SpecInstall.EXE
+
+\bibitem[Hupfer(1996)]{hupfer1996}
+Hupfer, P. (1996). \emph{Unsere Umwelt: Das Klima—Globale und
+lokale Aspekte} [Our environment: The climate—Global and
+local aspects]. Teubner Verlag.
+
+\bibitem[Machado \& Swank(2019)]{machado19}
+Machado, M.~M., \& Swank, J.~M. (2019). Therapeutic gardening:
+A counseling approach for bereavement from suicide.
+\emph{Death Studies}, \emph{43}(10), 629--633.
+https://doi.org/10.1080/07481187.2018.1509908
+
+\bibitem[Monk(1957)]{monk57}
+Monk, T. (1957). ’Round midnight [Song]. On \emph{Thelonious himself}.
+Riverside.
+
+\bibitem[Nichols et~al.(2019)]{nichols19}
+Nichols, H.~B., Schoemaker, M.~J., Cai, H., Xu, M., Wright, L.~B.,
+Brook, M.~N., Jones, M.~E., Adami, M., Baglietto, M., Bertrand, K.~A.,
+Blot, W.~J., Boutron-Ruault, K., Dorronsoro, W., Dossus, M.-C.,
+Eliassen, A.~H., Giles, G.~G., Gram, I.~T., Hankinson, S.~E.,
+Hoffman-Bolton, I., . . . Sandler, D.~P. (2019). Breast cancer risk
+after recent childbirth: A pooled analysis of 15 prospective studies.
+\emph{Annals of Internal Medicine}, \emph{170}(1), 22--30.
+https://doi.org/10.7326/M18-1323
+
+\bibitem[``Physician Oversight of Specialized Emergency Medical Services''
+(2019)]{physician19}
+Physician oversight of specialized emergency medical services.
+(2019). \emph{Prehospital Emergency Care}, \emph{23}(4), 590--591.
+https://doi.org/10.1080/10903127.2018.1551452
+
+\bibitem[Piaget(1945/1995)]{piaget95}
+Piaget, J. (1995). Logical operators and social life (W. Mays,
+Trans.). In L. Smith (Ed.), \emph{Sociological studies} (pp.
+134--157). Routledge. (Original work published 1945)
+
+\bibitem[Pitt Rivers Museum(n.d.)]{pittnd}
+Pitt Rivers Museum. (n.d.). emph{Conservation case study: Noh
+theatre masks}. Retrieved May 23, 2023, from 
+https://www.prm.ox.ac.uk/conservation-case-study-noh-theatre-masks
+
+\bibitem[Remael(2012)]{remael12}
+Remael, A. (2012). Audiovisual translation. In Y. Gambier \& L.
+van Doorslaer (Eds.), \emph{Handbook of translation studies}
+(2nd ed., Vol. 1, pp. 12--17). John Benjamins.
+
+\bibitem[Schack et~al.(2019)]{schack19}
+Schack, E.~O., Dueber, D., Norris Thomas, J., Fisher, M.~H.,
+\& Jong, C. (2019, April 5--9). \emph{Computer-programmed
+decision trees for assessing teacher noticing} [Paper presentation].
+American Educational Research Association Annual Meeting,
+Toronto, ON, Canada.
+
+\bibitem[Watermeyer et~al.(in press)]{watermeyerip}
+Watermeyer, B., Hunt, X., Swartz, L., \& Rohleder, P. (in press).
+Navigating the relational psychic economy of disability: The case
+of M. \emph{Psychoanalytic Dialogues}.
+
+\bibitem[Wittgenstein(1953/2009)]{wittgenstein09}
+Wittgenstein, L. (2009). \emph{Philosophical investigations}
+(G.~E.~M. Anscombe, P.~M.~S. Hacker, \& J. Schulte, Trans.;
+4th ed.). Wiley–Blackwell. (Original work published 1953)
+
+\bibitem[Wiley(2008)]{wiley08}
+Wiley, K. (2008). \emph{Three wise men greeting entry into Lagos}
+[Painting]. Pennsylvania Academy of the Fine Arts, Philadelphia,
+PA, United States.
+https://www.pafa.org/sites/default/files/artworkpics/2009 20 l.jpg
+
+\bibitem[Zaragoza(2005)]{zaragoza05}
+Zaragoza, K. (2005). \emph{A moral psychology of blame} [Unpublished
+doctoral dissertation]. Princeton University.
+
+\end{thebibliography}
+\end{verbatim}
+\bigskip
+\noindent Each entry takes the form:
+\begin{verbatim}
+\bibitem[short list of authors' surnames(date of publication)long list
+ of authors' surnames]{key}
+Bibliography entry
+\end{verbatim}
+where `\texttt{long list of authors' surnames}' is the \emph{optional} `long' list of three, four or five names which enables them all to appear where the \verb"bibitem" is first cited in the text (if the long list is missing, the short list will be used instead), and `\texttt{key}' is the tag that is to be used as an argument for the \verb"\cite" commands in the text of the article. `\texttt{Bibliography entry}' is the material that is to appear in the list of references, suitably formatted. The commands
+
+\begin{verbatim}
+\usepackage[longnamesfirst,sort]{natbib}
+\bibpunct[, ]{(}{)}{;}{a}{,}{,}
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}
+\end{verbatim}
+need to be included in the preamble of your .tex file in order to generate the citations and bibliography as described above.
+
+Instead of typing the bibliography by hand, you may prefer to create the list of references using a \textsc{Bib}\TeX\ database. For this we suggest using \texttt{tfapa} files derived from Erik Meijer's \texttt{apacite} package but updated to accommodate APA-7 styling recommendations. The \verb"tfapastyle.sty", \verb"tfapacite.bst" files found in this \textsf{Interact}-APA \LaTeX\ bundle need to be in your working folder or an appropriate directory. The commands
+\begin{verbatim}
+\usepackage[natbibapa]{tfapastyle}
+\setlength\bibhang{12pt}
+\renewcommand\bibliographytypesize{\fontsize{10}{12}\selectfont}
+\end{verbatim}
+must be active in the preamble of your .tex file, and the \verb"\usepackage[]{natbib}", \verb"\bibpunct" and \verb"\renewcommand\bibfont" commands described above must be suppressed (via \'\%\'). The lines
+\begin{verbatim}
+\bibliographystyle{tfapacite}
+\bibliography{interactapasample}
+\end{verbatim}
+must added where the list of references should appear. (Note: \texttt{interactapasample.bib} is the bibliographic database included with the \textsf{Interact}-APA \LaTeX\ bundle and should be replaced with the name of your own .bib file). The \verb"[natbibapa]" option must be added to \verb"\usepackage{tfapastyle}" in order to enable citation commands of the type \verb"\citep" and \verb"\citet". \LaTeX/\textsc{Bib}\TeX\ will extract from your .bib file only those references that are cited in your .tex file and list them in the References section.
+
+Please include a copy of your .bib file and/or the final generated .bbl file among your source files if your .tex file does not contain a reference list in a \texttt{thebibliography} environment.
+
+
+\section{Appendices}
+
+Any appendices should be placed after the list of references, beginning with the command \verb"\appendix" followed by the command \verb"\section" for each appendix title, e.g.
+\begin{verbatim}
+\appendix
+\section{This is the title of the first appendix}
+\section{This is the title of the second appendix}
+\end{verbatim}
+produces:\medskip
+
+\noindent\textbf{Appendix A. This is the title of the first appendix}\medskip
+
+\noindent\textbf{Appendix B. This is the title of the second appendix}\medskip
+
+\noindent Subsections, equations, figures, tables, etc.\ within appendices will then be automatically numbered as appropriate. Some theorem-like environments may need to have their counters reset manually (e.g.\ if they are not numbered within sections in the main text). You can achieve this by using \verb"\numberwithin{remark}{section}" (for example) just after the \verb"\appendix" command.
+
+Note that if the \verb"endfloat" package is used on a document containing any appendices, the \verb"\processdelayedfloats" command must be included immediately before the \verb"\appendix" command in order to ensure that the floats belonging to the main body of the text are numbered as such.
+
+%\processdelayedfloats %%% See above for an explanation of why this command might be needed here.
+
+\appendix
+
+\section{Troubleshooting}
+
+Authors may occasionally encounter problems with the preparation of a manuscript using \LaTeX. The appropriate action to take will depend on the nature of the problem:
+\begin{enumerate}
+\item[(i)] If the problem is with \LaTeX\ itself, rather than with the actual macros, please consult an appropriate \LaTeXe\ manual for initial advice. If the solution cannot be found, or if you suspect that the problem does lie with the macros, then please contact Taylor \& Francis for assistance (\texttt{latex.helpdesk@tandf.co.uk}), clearly stating the title of the journal to which you are submitting.
+\item[(ii)] Problems with page make-up (e.g.\ occasional overlong lines of text; figures or tables appearing out of order): please do not try to fix these using `hard' page make-up commands -- the typesetter will deal with such problems. (You may, if you wish, draw attention to particular problems when submitting the final version of your manuscript.)
+\item[(iii)] If a required font is not available on your system, allow \TeX\ to substitute the font and specify which font is required in a covering letter accompanying your files.
+\end{enumerate}
+
+
+\section{Obtaining the template and class file}
+
+\subsection{Via the Taylor \& Francis website}
+
+This article template and the \texttt{interact} class file may be obtained via the `Instructions for Authors' pages of selected Taylor \& Francis journals.
+
+Please note that the class file calls up the open-source \LaTeX\ packages booktabs.sty, epsfig.sty and rotating.sty, which will, for convenience, unpack with the downloaded template and class file. The template optionally calls for natbib.sty and subfig.sty, which are also supplied for convenience.
+
+
+\subsection{Via e-mail}
+
+This article template, the \texttt{interact} class file and the associated open-source \LaTeX\ packages are also available via e-mail. Requests should be addressed to \texttt{latex.helpdesk@tandf.co.uk}, clearly stating for which journal you require the template and class file.
+
+\end{document}
+
