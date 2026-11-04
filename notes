@@ -1,0 +1,29 @@
+head
+|
+main ===>    ilo001 ----> kj554 <===== br1
+ HEAD^            j7654h   ch554 
+  HEAD^^             a44475 
+               b5675
+              h4454  
+
+
+HEAD@yesterday
+HEAD@June.1
+
+git merge. ===> garde lhistorique des commit et des branche
+git rebase
+
+head
+|
+ main ===>      kj554.  <===== br1
+    ilo001 
+                ch554
+ HEAD^            j7654h    
+  HEAD^^             a44475 
+               b5675
+              h4454 
+
+
+
+              reset soft 
+              reset hard
